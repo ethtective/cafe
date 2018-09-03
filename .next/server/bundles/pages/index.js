@@ -344,12 +344,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__material_ui_core_TextField___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__material_ui_core_TextField__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__material_ui_core_Paper__ = __webpack_require__("@material-ui/core/Paper");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__material_ui_core_Paper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__material_ui_core_Paper__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_react_syntax_highlighter__ = __webpack_require__("react-syntax-highlighter");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_react_syntax_highlighter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_react_syntax_highlighter__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_syntax_highlighter_styles_hljs__ = __webpack_require__("react-syntax-highlighter/styles/hljs");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_syntax_highlighter_styles_hljs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_react_syntax_highlighter_styles_hljs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_react_magic_dropzone__ = __webpack_require__("react-magic-dropzone");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_react_magic_dropzone___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_react_magic_dropzone__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_react_json_pretty__ = __webpack_require__("react-json-pretty");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_react_json_pretty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_react_json_pretty__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_magic_dropzone__ = __webpack_require__("react-magic-dropzone");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_magic_dropzone___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_react_magic_dropzone__);
 
 var _jsxFileName = "/Users/alexander/Node/ethtective.cafe/pages/index.js";
 
@@ -371,7 +369,6 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 
 
 
@@ -480,6 +477,10 @@ function (_React$Component) {
       value: function value(e) {
         console.log("pressed");
         metaData.addMetaData(_this.state.saveAddress, _this.state.saveName, _this.state.file);
+
+        _this.setState({
+          address: _this.state.saveAddress
+        });
       }
     });
     Object.defineProperty(_assertThisInitialized(_this), "onDrop", {
@@ -568,22 +569,96 @@ function (_React$Component) {
       })), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("h1", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 110
-        }
-      }, "Metadata Viewer"), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("p", {
-        __source: {
-          fileName: _jsxFileName,
           lineNumber: 111
         }
-      }, "Contract at: "), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("pre", {
+      }, "Metadata Uploader"), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("p", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 112
+        }
+      }, "Upload the following metadata for ", this.state.price, " Eth:"), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("form", {
+        "class": "",
+        noValidate: true,
+        autoComplete: "off",
         __source: {
           fileName: _jsxFileName,
           lineNumber: 113
         }
-      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("code", {
+      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__material_ui_core_TextField___default.a, {
+        fullWidth: true,
+        label: "Address",
+        onChange: this.handleSaveChange("saveAddress"),
         __source: {
           fileName: _jsxFileName,
           lineNumber: 114
+        }
+      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__material_ui_core_TextField___default.a, {
+        fullWidth: true,
+        label: "Name",
+        onChange: this.handleSaveChange("saveName"),
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 119
+        }
+      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("br", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 124
+        }
+      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("br", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 125
+        }
+      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("label", {
+        htmlFor: "flat-button-file",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 126
+        }
+      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__material_ui_core_Button___default.a, {
+        size: "small",
+        component: "span",
+        className: "image_upload",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 127
+        }
+      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11_react_magic_dropzone___default.a, {
+        className: "Dropzone",
+        accept: "image/jpeg, image/png, .jpg, .jpeg, .png, .svg",
+        onDrop: this.onDrop,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 128
+        }
+      }, "Upload Image"))), " ", __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__material_ui_core_Button___default.a, {
+        size: "small",
+        variant: "contained",
+        onClick: this.onSubmit,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 137
+        }
+      }, "Save To Ethereum")), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("h1", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 142
+        }
+      }, "Metadata Viewer"), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("p", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 143
+        }
+      }, "Contract at: "), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("pre", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 145
+        }
+      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("code", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 146
         }
       }, metaData.contract_address)), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("img", {
         src: this.state.metadata.image,
@@ -593,114 +668,43 @@ function (_React$Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 116
+          lineNumber: 148
         }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10_react_syntax_highlighter___default.a, {
+      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10_react_json_pretty___default.a, {
         language: "JSON",
-        style: __WEBPACK_IMPORTED_MODULE_11_react_syntax_highlighter_styles_hljs__["docco"],
+        json: JSON.stringify(this.state.metadata),
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 120
+          lineNumber: 152
         }
-      }, JSON.stringify(this.state.metadata)), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__material_ui_core_TextField___default.a, {
+      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__material_ui_core_TextField___default.a, {
         label: "Address",
         fullWidth: true,
         value: this.state.address,
         onChange: this.onInputChange,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 123
+          lineNumber: 156
         }
       }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("br", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 129
+          lineNumber: 162
         }
       }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("br", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 130
+          lineNumber: 163
         }
       }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__material_ui_core_Button___default.a, {
+        size: "small",
         variant: "contained",
         onClick: this.onViewAddress,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 131
+          lineNumber: 164
         }
-      }, "View"), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("h1", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 135
-        }
-      }, "Metadata Uploader"), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("p", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 136
-        }
-      }, "Upload the following metadata for ", this.state.price, " Eth:"), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("form", {
-        "class": "",
-        noValidate: true,
-        autoComplete: "off",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 137
-        }
-      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__material_ui_core_TextField___default.a, {
-        fullWidth: true,
-        label: "Address",
-        onChange: this.handleSaveChange("saveAddress"),
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 138
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__material_ui_core_TextField___default.a, {
-        fullWidth: true,
-        label: "Name",
-        onChange: this.handleSaveChange("saveName"),
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 143
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("br", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 148
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("br", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 149
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("label", {
-        htmlFor: "flat-button-file",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 150
-        }
-      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__material_ui_core_Button___default.a, {
-        component: "span",
-        className: "image_upload",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 151
-        }
-      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12_react_magic_dropzone___default.a, {
-        className: "Dropzone",
-        accept: "image/jpeg, image/png, .jpg, .jpeg, .png, .svg",
-        onDrop: this.onDrop,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 152
-        }
-      }, "Upload Image"))), " ", __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__material_ui_core_Button___default.a, {
-        variant: "contained",
-        onClick: this.onSubmit,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 161
-        }
-      }, "Save To Ethereum")));
+      }, "View"));
     }
   }]);
 
@@ -782,24 +786,17 @@ module.exports = require("react");
 
 /***/ }),
 
+/***/ "react-json-pretty":
+/***/ (function(module, exports) {
+
+module.exports = require("react-json-pretty");
+
+/***/ }),
+
 /***/ "react-magic-dropzone":
 /***/ (function(module, exports) {
 
 module.exports = require("react-magic-dropzone");
-
-/***/ }),
-
-/***/ "react-syntax-highlighter":
-/***/ (function(module, exports) {
-
-module.exports = require("react-syntax-highlighter");
-
-/***/ }),
-
-/***/ "react-syntax-highlighter/styles/hljs":
-/***/ (function(module, exports) {
-
-module.exports = require("react-syntax-highlighter/styles/hljs");
 
 /***/ }),
 
