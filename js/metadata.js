@@ -19,17 +19,13 @@ export default class MetaDataContract {
         this.contractView = ethRead.contract(abi).at(this.contract_address);
         this.price = 0;
         this.eth = eth;
-        // console.log("constructed");
         reader = new FileReader();
-        // uncomment to enable MetaMask support:
         if (
             typeof window.web3 !== "undefined" &&
             typeof window.web3.currentProvider !== "undefined"
         ) {
             eth.setProvider(window.web3.currentProvider);
-            console.log("metamask!");
-
-            console.log(eth.net_version());
+            // console.log("metamask!");
         } else {
             // keep current infura provider
             // console.log("yay");
@@ -49,7 +45,9 @@ export default class MetaDataContract {
         });
     }
 
+    //this is deprecated
     async getAddress(address) {
+        console.error("deprecated", this);
         return this.contractView
             .getByAddress(eip55.encode(address))
             .then(result => {
@@ -66,7 +64,38 @@ export default class MetaDataContract {
             });
     }
 
+    async retrieveDataJSON(address) {
+        return this.contractView
+            .getByAddress(address)
+            .then(result => {
+                //TODO: check if valid IPFS link
+                return this.lookUpPromise(result[2]).then(ipfs => {
+                    return {
+                        address: result[0],
+                        name: result[1],
+                        data: ipfs,
+                    };
+                });
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
+
+    async saveDataJSON(address, data) {}
+
+    async lookUpPromise(address) {
+        return new Promise((resolve, reject) => {
+            ipfs.cat(address, (err, result) => {
+                if (err) reject(err);
+                resolve(result);
+            });
+        });
+    }
+
+    //this is deprecated
     async lookUp(address, callback) {
+        console.error("deprecated", this);
         ipfs.cat(address, (err, result) => {
             // console.log(result);
             callback(result);

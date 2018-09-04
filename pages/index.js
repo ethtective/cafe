@@ -78,6 +78,12 @@ export default class Index extends React.Component {
         this.viewAddress(this.state.address);
     };
 
+    onViewAddressPromise = e => {
+        metaData.retrieveDataJSON(this.state.address).then(result => {
+            console.log(result);
+        });
+    };
+
     onSubmit = e => {
         metaData.addMetaData(
             this.state.saveAddress,
@@ -121,7 +127,8 @@ export default class Index extends React.Component {
                 <p>
                     {this.state.network !== 3 ? (
                         <b style={{ color: "red" }}>
-                            Please connect to Ropsten test network to upload metadata
+                            Please connect to Ropsten test network to upload
+                            metadata
                         </b>
                     ) : (
                         ""
@@ -195,6 +202,13 @@ export default class Index extends React.Component {
                     onClick={this.onViewAddress}
                 >
                     View
+                </Button>
+                <Button
+                    size="small"
+                    variant="contained"
+                    onClick={this.onViewAddressPromise}
+                >
+                    View Promise
                 </Button>
             </div>
         );
