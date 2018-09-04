@@ -4,11 +4,10 @@
     "description": "Metadata Uploader for Ethtective.com",
     "main": "index.js",
     "scripts": {
-        "dev": "next -p 3800",
+        "dev": "next -p 3700",
         "build": "next build",
         "start": "next start",
-        "test-upload":
-            "next build && now -n ethtectivecafe  && now alias cafe.ethtective.com"
+        "test-upload": "next build && now -n ethtectivecafe  && now alias cafe.ethtective.com"
     },
     "author": "",
     "license": "ISC",
@@ -22,6 +21,7 @@
         "react": "^16.4.2",
         "react-dom": "^16.4.2",
         "react-json-pretty": "^1.7.9",
+        "react-json-view": "https://github.com/mac-s-g/react-json-view",
         "react-magic-dropzone": "^1.0.1",
         "react-syntax-highlighter": "^8.0.1",
         "react-typography": "^0.16.13",

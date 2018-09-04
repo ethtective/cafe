@@ -6,6 +6,8 @@ import IPFS from "ipfs-mini";
 let reader = {};
 const eth = new Eth(new Eth.HttpProvider("https://ropsten.infura.io"));
 const ethRead = new Eth(new Eth.HttpProvider("https://ropsten.infura.io"));
+const mainnet = new Eth(new Eth.HttpProvider("https://mainnet.infura.io"));
+
 const json = {
     version: "0.2",
     address: "",
@@ -49,6 +51,12 @@ export default class MetaDataContract {
         this.contract_address = "0xe5a16d3ff0e4bd6204c05061f47c12264f315af4";
         this.contract = eth.contract(abi).at(this.contract_address);
         this.contractView = ethRead.contract(abi).at(this.contract_address);
+        // this.priceOracle = mainnet
+        //     .contract()
+        //     .at(
+        //         "https://etherscan.io/address/0x729D19f657BD0614b4985Cf1D82531c67569197B",
+        //     );
+        console.log(Eth.fromWei(1536134379, "ether"));
         this.price = 0;
         this.eth = eth;
         reader = new FileReader();

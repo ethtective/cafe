@@ -6,8 +6,8 @@ import githubTheme from "typography-theme-github";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
-import JSONPretty from "react-json-pretty";
 import MagicDropzone from "react-magic-dropzone";
+import JSONPretty from "react-json-pretty";
 
 githubTheme.headerFontFamily = ["Roboto", "sans-serif"];
 githubTheme.bodyFontFamily = ["Roboto", "sans-serif"];
@@ -68,6 +68,12 @@ export default class Index extends React.Component {
                     let image = contractdata.data.metadata.logo;
                     this.setState({ logo: image });
                 }
+                this.setState({
+                    saveName: contractdata.data.metadata.name,
+                    saveUrl: contractdata.data.metadata.url,
+                    saveDescription: contractdata.data.metadata.description,
+                    saveAddress: contractdata.address,
+                });
                 this.setState({ metadata: contractdata });
             })
             .catch(err => {
@@ -83,6 +89,8 @@ export default class Index extends React.Component {
         const data = metaData.getEmptyObject();
         data.address = this.state.saveAddress;
         data.metadata.name = this.state.saveName;
+        data.metadata.url = this.state.saveUrl;
+        data.metadata.description = this.state.saveDescription;
         if (this.state.file)
             data.metadata.logo = await metaData.convertBlobToBase64(
                 this.state.file,
@@ -103,7 +111,6 @@ export default class Index extends React.Component {
 
     handleSaveChange = prop => event => {
         this.setState({ [prop]: event.target.value });
-        // console.log(this.state);
     };
 
     render() {
@@ -138,71 +145,132 @@ export default class Index extends React.Component {
                 Ropsten Testnet Contract:{" "}
                 <code>{metaData.contract_address}</code>
                 <p>
-                    {this.state.network === 3
-                        ? "Upload the following metadata for " +
-                          this.state.price +
-                          " Eth:"
-                        : ""}
+                    {this.state.network === 3 ? (
+                        <p>
+                            <b>
+                                Upload the following metadata for{" "}
+                                {this.state.price} Eth:
+                            </b>
+                        </p>
+                    ) : (
+                        ""
+                    )}
                 </p>
                 <form noValidate autoComplete="off">
                     <TextField
                         fullWidth
+                        required={true}
                         label="Address"
                         onChange={this.handleSaveChange("saveAddress")}
+                        className="top-padding monofont"
                     />
                     <TextField
                         fullWidth
+                        required={true}
                         label="Name"
                         onChange={this.handleSaveChange("saveName")}
+                        className="top-padding"
                     />
-                    <br />
-                    <br />
-                    <label htmlFor="flat-button-file">
+                    <TextField
+                        fullWidth
+                        label="Url"
+                        onChange={this.handleSaveChange("saveUrl")}
+                        className="top-padding"
+                    />
+                    <TextField
+                        fullWidth
+                        label="Description"
+                        onChange={this.handleSaveChange("saveDescription")}
+                        className="top-padding"
+                    />
+                    <div className="button-aligner">
+                        <label htmlFor="flat-button-file">
+                            <Button
+                                size="small"
+                                component="span"
+                                className={"image_upload button"}
+                            >
+                                <MagicDropzone
+                                    className="Dropzone"
+                                    accept="image/jpeg, image/png, .jpg, .jpeg, .png, .svg"
+                                    onDrop={this.onDrop}
+                                >
+                                    Upload Image
+                                </MagicDropzone>
+                            </Button>
+                        </label>{" "}
                         <Button
                             size="small"
-                            component="span"
-                            className={"image_upload"}
+                            variant="contained"
+                            onClick={this.onSubmit}
                         >
-                            <MagicDropzone
-                                className="Dropzone"
-                                accept="image/jpeg, image/png, .jpg, .jpeg, .png, .svg"
-                                onDrop={this.onDrop}
-                            >
-                                Upload Image
-                            </MagicDropzone>
+                            Save To Ethereum
                         </Button>
-                    </label>{" "}
-                    <Button
-                        size="small"
-                        variant="contained"
-                        onClick={this.onSubmit}
-                    >
-                        Save To Ethereum
-                    </Button>
+                    </div>
                 </form>
+                <br />
+                <br />
                 <h1>Metadata Viewer</h1>
                 <TextField
                     label="Address"
                     fullWidth
                     value={this.state.address}
                     onChange={this.onInputChange}
+                    className="top-padding monofont"
                 />
+                <div className="button-aligner">
+                    <Button
+                        size="small"
+                        variant="contained"
+                        onClick={this.onViewAddress}
+                    >
+                        View
+                    </Button>
+                </div>
                 <br />
                 <br />
-                <Button
-                    size="small"
-                    variant="contained"
-                    onClick={this.onViewAddress}
-                >
-                    View
-                </Button>
-                <br />
-                <br />
-                <img src={this.state.logo} style={{ width: 64, height: 64 }} />
-                <JSONPretty
-                    language="JSON"
-                    json={JSON.stringify(this.state.metadata.data)}
+                <img
+                    src={this.state.logo}
+                    style={{
+                        width: 64,
+                        height: 64,
+                        border: "1px solid #dfdfdf",
+                    }}
                 />
+                <JSONPretty json={JSON.stringify(this.state.metadata.data)} />
+                <style global jsx>{`
+                    .json-pretty {
+                        line-height: 1.75;
+                        color: #66d9ef;
+                    }
+                    .json-pretty .json-key {
+                        color: #aaa;
+                        font-weight: lighter;
+                    }
+                    .json-pretty .json-value {
+                        color: #3b4252;
+                    }
+                    .json-pretty .json-string {
+                        color: #434c5e;
+                    }
+                    .json-pretty .json-boolean {
+                        color: #ac81fe;
+                    }
+                    .button {
+                        margin-right: 15px;
+                    }
+                    .button-aligner {
+                        margin-top: 15px;
+                        float: right;
+                    }
+                    .top-padding {
+                        margin-top: 3px;
+                    }
+                    .monofont input {
+                        font-family: monospace;
+                        font-size: 120%;
+                    }
+                `}</style>
             </div>
         );
     }
