@@ -4,6 +4,7 @@ import abi from "../abi/metadata.json";
 import IPFS from "ipfs-mini";
 let reader = {};
 const eth = new Eth(new Eth.HttpProvider("https://ropsten.infura.io"));
+const ethRead = new Eth(new Eth.HttpProvider("https://ropsten.infura.io"));
 
 const ipfs = new IPFS({
     host: "ipfs.infura.io",
@@ -15,6 +16,7 @@ export default class MetaDataContract {
     constructor() {
         this.contract_address = "0x7f0b2a8c93db220637f835ef075e3dbc17beff7d";
         this.contract = eth.contract(abi).at(this.contract_address);
+        this.contractView = ethRead.contract(abi).at(this.contract_address);
         this.price = 0;
         this.eth = eth;
         // console.log("constructed");
@@ -48,7 +50,7 @@ export default class MetaDataContract {
     }
 
     async getAddress(address) {
-        return this.contract
+        return this.contractView
             .getByAddress(eip55.encode(address))
             .then(result => {
                 // console.log(result);

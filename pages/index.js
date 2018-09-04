@@ -121,7 +121,7 @@ export default class Index extends React.Component {
                 <p>
                     {this.state.network !== 3 ? (
                         <b style={{ color: "red" }}>
-                            Please connect to Ropsten test network
+                            Please connect to Ropsten test network to upload metadata
                         </b>
                     ) : (
                         ""
@@ -129,7 +129,13 @@ export default class Index extends React.Component {
                 </p>
                 Ropsten Testnet Contract:{" "}
                 <code>{metaData.contract_address}</code>
-                <p>Upload the following metadata for {this.state.price} Eth:</p>
+                <p>
+                    {this.state.network === 3
+                        ? "Upload the following metadata for " +
+                          this.state.price +
+                          " Eth:"
+                        : ""}
+                </p>
                 <form noValidate autoComplete="off">
                     <TextField
                         fullWidth
