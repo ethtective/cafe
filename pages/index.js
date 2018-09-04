@@ -32,7 +32,7 @@ export default class Index extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            address: "0x09ca59e18c58f25b092a0f2670928f5d0656a331",
+            address: "",
             metadata: { address: "", name: "", image: "" },
             price: "NaN",
             network: 3,
@@ -41,15 +41,15 @@ export default class Index extends React.Component {
 
     componentDidMount() {
         metaData = new metadata();
+        this.setState({ address: metaData.contract_address });
         metaData.getPrice().then(result => {
             // console.log(result);
             this.setState({ price: result });
         });
         metaData.getNetwork().then(result => {
-            console.log(result);
             this.setState({ network: parseInt(result) });
         });
-        this.viewAddress(this.state.address);
+        this.viewAddress(metaData.contract_address);
     }
 
     onInputChange = async e => {
@@ -60,38 +60,39 @@ export default class Index extends React.Component {
     };
 
     viewAddress = address => {
-        metaData.getAddress(address).then(response => {
-            // console.log(response);
-            if (response.image) {
-                let ipfs = metaData.lookUp(response.image, result => {
-                    let image = result;
-                    response.image = image;
-                    this.setState({ metadata: response });
-                });
-            } else {
-                this.setState({ metadata: response });
-            }
-        });
+        metaData
+            .getAddressData(address)
+            .then(contractdata => {
+                console.log(contractdata);
+                if (contractdata.data.metadata.logo) {
+                    let image = contractdata.data.metadata.logo;
+                    this.setState({ logo: image });
+                }
+                this.setState({ metadata: contractdata });
+            })
+            .catch(err => {
+                throw Error(err);
+            });
     };
 
     onViewAddress = e => {
         this.viewAddress(this.state.address);
     };
 
-    onViewAddressPromise = e => {
-        metaData.retrieveDataJSON(this.state.address).then(result => {
-            console.log(result);
+    onSubmit = async e => {
+        const data = metaData.getEmptyObject();
+        data.address = this.state.saveAddress;
+        data.metadata.name = this.state.saveName;
+        if (this.state.file)
+            data.metadata.logo = await metaData.convertBlobToBase64(
+                this.state.file,
+            );
+        metaData.storeMetadata(data.address, data).then(response => {
+            this.setState({ address: this.state.saveAddress });
         });
     };
 
-    onSubmit = e => {
-        metaData.addMetaData(
-            this.state.saveAddress,
-            this.state.saveName,
-            this.state.file,
-        );
-        this.setState({ address: this.state.saveAddress });
-    };
+    formatData = data => {};
 
     onDrop = (accepted, rejected, links) => {
         // console.log(accepted);
@@ -108,7 +109,7 @@ export default class Index extends React.Component {
     render() {
         return (
             <div
-                class="markdown"
+                className="markdown"
                 style={{
                     maxWidth: "42rem",
                     marginLeft: "auto",
@@ -180,14 +181,6 @@ export default class Index extends React.Component {
                     </Button>
                 </form>
                 <h1>Metadata Viewer</h1>
-                <img
-                    src={this.state.metadata.image}
-                    style={{ width: 64, height: 64 }}
-                />
-                <JSONPretty
-                    language="JSON"
-                    json={JSON.stringify(this.state.metadata)}
-                />
                 <TextField
                     label="Address"
                     fullWidth
@@ -203,13 +196,13 @@ export default class Index extends React.Component {
                 >
                     View
                 </Button>
-                <Button
-                    size="small"
-                    variant="contained"
-                    onClick={this.onViewAddressPromise}
-                >
-                    View Promise
-                </Button>
+                <br />
+                <br />
+                <img src={this.state.logo} style={{ width: 64, height: 64 }} />
+                <JSONPretty
+                    language="JSON"
+                    json={JSON.stringify(this.state.metadata.data)}
+                />
             </div>
         );
     }

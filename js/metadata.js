@@ -2,10 +2,42 @@ import Eth from "ethjs";
 import eip55 from "eip55";
 import abi from "../abi/metadata.json";
 import IPFS from "ipfs-mini";
+
 let reader = {};
 const eth = new Eth(new Eth.HttpProvider("https://ropsten.infura.io"));
 const ethRead = new Eth(new Eth.HttpProvider("https://ropsten.infura.io"));
-
+const json = {
+    version: "0.2",
+    address: "",
+    submission: {
+        comments: "",
+        ipfs: [],
+    },
+    metadata: {
+        name: "",
+        url: "",
+        logo: "",
+        description: "",
+        contact: [],
+        contract: {
+            abi: "",
+            source: "",
+            compiler_version: "",
+            swarm_source: "",
+            interfaces: [],
+            erc: [],
+        },
+        reputation: {
+            verified: [],
+            status: "",
+            category: "",
+            subcategory: "",
+            description: "",
+            related: [],
+        },
+    },
+    scamdb: {},
+};
 const ipfs = new IPFS({
     host: "ipfs.infura.io",
     port: 5001,
@@ -14,7 +46,7 @@ const ipfs = new IPFS({
 
 export default class MetaDataContract {
     constructor() {
-        this.contract_address = "0x7f0b2a8c93db220637f835ef075e3dbc17beff7d";
+        this.contract_address = "0xe5a16d3ff0e4bd6204c05061f47c12264f315af4";
         this.contract = eth.contract(abi).at(this.contract_address);
         this.contractView = ethRead.contract(abi).at(this.contract_address);
         this.price = 0;
@@ -45,31 +77,15 @@ export default class MetaDataContract {
         });
     }
 
-    //this is deprecated
-    async getAddress(address) {
-        console.error("deprecated", this);
-        return this.contractView
-            .getByAddress(eip55.encode(address))
-            .then(result => {
-                // console.log(result);
-                result[0] = eip55.encode(result[0]);
-                return {
-                    address: result[0],
-                    name: result[1],
-                    image: result[2],
-                };
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    }
-
-    async retrieveDataJSON(address) {
+    async getAddressData(address) {
         return this.contractView
             .getByAddress(address)
             .then(result => {
                 //TODO: check if valid IPFS link
-                return this.lookUpPromise(result[2]).then(ipfs => {
+                // console.log(result);
+                if (result[0] === "0x0000000000000000000000000000000000000000")
+                    throw Error(`No metadata information for ${address}`);
+                return this.lookUp(result[2]).then(ipfs => {
                     return {
                         address: result[0],
                         name: result[1],
@@ -78,27 +94,32 @@ export default class MetaDataContract {
                 });
             })
             .catch(err => {
-                console.error(err);
+                throw Error(err);
             });
     }
 
-    async saveDataJSON(address, data) {}
+    getEmptyObject() {
+        return json;
+    }
 
-    async lookUpPromise(address) {
+    async storeMetadata(address, data) {
         return new Promise((resolve, reject) => {
-            ipfs.cat(address, (err, result) => {
-                if (err) reject(err);
-                resolve(result);
+            ipfs.addJSON(data, (err, result) => {
+                console.log(`IPFS Hash: ${result}`);
+                if (err)
+                    reject(new DOMException("Couldn't add metadata to IPFS"));
+                return this.contract
+                    .addAddress(address, name, result, {
+                        from: web3.eth.accounts[0],
+                        value: this.price,
+                    })
+                    .then(result => {
+                        resolve(result);
+                    })
+                    .catch(err => {
+                        reject(err);
+                    });
             });
-        });
-    }
-
-    //this is deprecated
-    async lookUp(address, callback) {
-        console.error("deprecated", this);
-        ipfs.cat(address, (err, result) => {
-            // console.log(result);
-            callback(result);
         });
     }
 
@@ -117,25 +138,11 @@ export default class MetaDataContract {
         });
     }
 
-    async addMetaData(address, name, image) {
-        let base64 = await this.convertBlobToBase64(image);
+    async lookUp(address) {
         return new Promise((resolve, reject) => {
-            ipfs.add(base64, (err, result) => {
-                console.log(result);
-                if (err)
-                    reject(new DOMException("Couldn't add metadata to IPFS"));
-
-                return this.contract
-                    .addAddress(address, name, result, {
-                        from: web3.eth.accounts[0],
-                        value: this.price,
-                    })
-                    .then(result => {
-                        resolve(result);
-                    })
-                    .catch(err => {
-                        reject(err);
-                    });
+            ipfs.catJSON(address, (err, result) => {
+                if (err) reject(err);
+                resolve(result);
             });
         });
     }
