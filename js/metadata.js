@@ -16,7 +16,8 @@ export default class MetaDataContract {
         this.contract_address = "0x7f0b2a8c93db220637f835ef075e3dbc17beff7d";
         this.contract = eth.contract(abi).at(this.contract_address);
         this.price = 0;
-        console.log("constructed");
+        this.eth = eth;
+        // console.log("constructed");
         reader = new FileReader();
         // uncomment to enable MetaMask support:
         if (
@@ -25,15 +26,21 @@ export default class MetaDataContract {
         ) {
             eth.setProvider(window.web3.currentProvider);
             console.log("metamask!");
+
+            console.log(eth.net_version());
         } else {
             // keep current infura provider
-            console.log("yay");
+            // console.log("yay");
         }
+    }
+
+    async getNetwork() {
+        return eth.net_version();
     }
 
     async getPrice() {
         return this.contract.getPrice().then(result => {
-            console.log(result[0]);
+            // console.log(result[0]);
             this.price = result[0];
 
             return Eth.fromWei(result[0], "ether");
@@ -44,7 +51,7 @@ export default class MetaDataContract {
         return this.contract
             .getByAddress(eip55.encode(address))
             .then(result => {
-                console.log(result);
+                // console.log(result);
                 result[0] = eip55.encode(result[0]);
                 return {
                     address: result[0],
@@ -59,7 +66,7 @@ export default class MetaDataContract {
 
     async lookUp(address, callback) {
         ipfs.cat(address, (err, result) => {
-            console.log(result);
+            // console.log(result);
             callback(result);
         });
     }

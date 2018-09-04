@@ -67,33 +67,63 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ "./abi/metadata.json":
+/******/ ([
+/* 0 */
 /***/ (function(module, exports) {
 
-module.exports = [{"constant":false,"inputs":[{"name":"_address","type":"address"},{"name":"_name","type":"string"},{"name":"_logo_ipfs","type":"string"}],"name":"addAddress","outputs":[{"name":"","type":"string"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_address","type":"address"},{"name":"_name","type":"string"},{"name":"_logo_ipfs","type":"string"}],"name":"addByOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"getMeOffTheFuckingList","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"lootDonationBox","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_price","type":"uint256"}],"name":"setPrice","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"adresses","outputs":[{"name":"_address","type":"address"},{"name":"_name","type":"string"},{"name":"_logo_ipfs","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"a","type":"address"}],"name":"getByAddress","outputs":[{"name":"","type":"address"},{"name":"","type":"string"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"i","type":"uint256"}],"name":"getByIndex","outputs":[{"name":"","type":"address"},{"name":"","type":"string"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getPrice","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"keys","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}]
+module.exports = require("@babel/runtime/regenerator");
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports) {
 
-/***/ "./js/metadata.js":
+module.exports = require("react");
+
+/***/ }),
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(6);
+
+
+/***/ }),
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MetaDataContract; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator__ = __webpack_require__("@babel/runtime/regenerator");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ethjs__ = __webpack_require__("ethjs");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ethjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_ethjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_eip55__ = __webpack_require__("eip55");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_eip55___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_eip55__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__abi_metadata_json__ = __webpack_require__("./abi/metadata.json");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__abi_metadata_json___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__abi_metadata_json__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ipfs_mini__ = __webpack_require__("ipfs-mini");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ipfs_mini___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ipfs_mini__);
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+// EXTERNAL MODULE: external "@babel/runtime/regenerator"
+var regenerator_ = __webpack_require__(0);
+var regenerator__default = /*#__PURE__*/__webpack_require__.n(regenerator_);
+
+// EXTERNAL MODULE: external "react"
+var external__react_ = __webpack_require__(1);
+var external__react__default = /*#__PURE__*/__webpack_require__.n(external__react_);
+
+// EXTERNAL MODULE: external "ethjs"
+var external__ethjs_ = __webpack_require__(7);
+var external__ethjs__default = /*#__PURE__*/__webpack_require__.n(external__ethjs_);
+
+// EXTERNAL MODULE: external "eip55"
+var external__eip55_ = __webpack_require__(8);
+var external__eip55__default = /*#__PURE__*/__webpack_require__.n(external__eip55_);
+
+// EXTERNAL MODULE: ./abi/metadata.json
+var metadata = __webpack_require__(9);
+var metadata_default = /*#__PURE__*/__webpack_require__.n(metadata);
+
+// EXTERNAL MODULE: external "ipfs-mini"
+var external__ipfs_mini_ = __webpack_require__(10);
+var external__ipfs_mini__default = /*#__PURE__*/__webpack_require__.n(external__ipfs_mini_);
+
+// CONCATENATED MODULE: ./js/metadata.js
 
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
@@ -109,51 +139,46 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 var reader = {};
-var eth = new __WEBPACK_IMPORTED_MODULE_1_ethjs___default.a(new __WEBPACK_IMPORTED_MODULE_1_ethjs___default.a.HttpProvider("https://ropsten.infura.io"));
-var ipfs = new __WEBPACK_IMPORTED_MODULE_4_ipfs_mini___default.a({
+var eth = new external__ethjs__default.a(new external__ethjs__default.a.HttpProvider("https://ropsten.infura.io"));
+var ipfs = new external__ipfs_mini__default.a({
   host: "ipfs.infura.io",
   port: 5001,
   protocol: "https"
 });
 
-var MetaDataContract =
+var metadata_MetaDataContract =
 /*#__PURE__*/
 function () {
   function MetaDataContract() {
     _classCallCheck(this, MetaDataContract);
 
     this.contract_address = "0x7f0b2a8c93db220637f835ef075e3dbc17beff7d";
-    this.contract = eth.contract(__WEBPACK_IMPORTED_MODULE_3__abi_metadata_json___default.a).at(this.contract_address);
+    this.contract = eth.contract(metadata_default.a).at(this.contract_address);
     this.price = 0;
-    console.log("constructed");
+    this.eth = eth; // console.log("constructed");
+
     reader = new FileReader(); // uncomment to enable MetaMask support:
 
     if (typeof window.web3 !== "undefined" && typeof window.web3.currentProvider !== "undefined") {
       eth.setProvider(window.web3.currentProvider);
       console.log("metamask!");
-    } else {
-      // keep current infura provider
-      console.log("yay");
+      console.log(eth.net_version());
+    } else {// keep current infura provider
+      // console.log("yay");
     }
   }
 
   _createClass(MetaDataContract, [{
-    key: "getPrice",
+    key: "getNetwork",
     value: function () {
-      var _getPrice = _asyncToGenerator(
+      var _getNetwork = _asyncToGenerator(
       /*#__PURE__*/
-      __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default.a.mark(function _callee() {
-        var _this = this;
-
-        return __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+      regenerator__default.a.mark(function _callee() {
+        return regenerator__default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                return _context.abrupt("return", this.contract.getPrice().then(function (result) {
-                  console.log(result[0]);
-                  _this.price = result[0];
-                  return __WEBPACK_IMPORTED_MODULE_1_ethjs___default.a.fromWei(result[0], "ether");
-                }));
+                return _context.abrupt("return", eth.net_version());
 
               case 1:
               case "end":
@@ -161,6 +186,36 @@ function () {
             }
           }
         }, _callee, this);
+      }));
+
+      return function getNetwork() {
+        return _getNetwork.apply(this, arguments);
+      };
+    }()
+  }, {
+    key: "getPrice",
+    value: function () {
+      var _getPrice = _asyncToGenerator(
+      /*#__PURE__*/
+      regenerator__default.a.mark(function _callee2() {
+        var _this = this;
+
+        return regenerator__default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                return _context2.abrupt("return", this.contract.getPrice().then(function (result) {
+                  // console.log(result[0]);
+                  _this.price = result[0];
+                  return external__ethjs__default.a.fromWei(result[0], "ether");
+                }));
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
       }));
 
       return function getPrice() {
@@ -172,14 +227,14 @@ function () {
     value: function () {
       var _getAddress = _asyncToGenerator(
       /*#__PURE__*/
-      __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default.a.mark(function _callee2(address) {
-        return __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+      regenerator__default.a.mark(function _callee3(address) {
+        return regenerator__default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                return _context2.abrupt("return", this.contract.getByAddress(__WEBPACK_IMPORTED_MODULE_2_eip55___default.a.encode(address)).then(function (result) {
-                  console.log(result);
-                  result[0] = __WEBPACK_IMPORTED_MODULE_2_eip55___default.a.encode(result[0]);
+                return _context3.abrupt("return", this.contract.getByAddress(external__eip55__default.a.encode(address)).then(function (result) {
+                  // console.log(result);
+                  result[0] = external__eip55__default.a.encode(result[0]);
                   return {
                     address: result[0],
                     name: result[1],
@@ -191,10 +246,10 @@ function () {
 
               case 1:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       return function getAddress(_x) {
@@ -206,22 +261,22 @@ function () {
     value: function () {
       var _lookUp = _asyncToGenerator(
       /*#__PURE__*/
-      __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default.a.mark(function _callee3(address, callback) {
-        return __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+      regenerator__default.a.mark(function _callee4(address, callback) {
+        return regenerator__default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 ipfs.cat(address, function (err, result) {
-                  console.log(result);
+                  // console.log(result);
                   callback(result);
                 });
 
               case 1:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
       return function lookUp(_x2, _x3) {
@@ -233,13 +288,13 @@ function () {
     value: function () {
       var _convertBlobToBase = _asyncToGenerator(
       /*#__PURE__*/
-      __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default.a.mark(function _callee4(blob) {
-        return __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default.a.wrap(function _callee4$(_context4) {
+      regenerator__default.a.mark(function _callee5(blob) {
+        return regenerator__default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 console.log(blob);
-                return _context4.abrupt("return", new Promise(function (resolve, reject) {
+                return _context5.abrupt("return", new Promise(function (resolve, reject) {
                   reader.onerror = function () {
                     reader.abort();
                     reject(new DOMException("Problem parsing input file."));
@@ -255,10 +310,10 @@ function () {
 
               case 2:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
 
       return function convertBlobToBase64(_x4) {
@@ -270,20 +325,20 @@ function () {
     value: function () {
       var _addMetaData = _asyncToGenerator(
       /*#__PURE__*/
-      __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default.a.mark(function _callee5(address, name, image) {
+      regenerator__default.a.mark(function _callee6(address, name, image) {
         var _this2 = this;
 
         var base64;
-        return __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default.a.wrap(function _callee5$(_context5) {
+        return regenerator__default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context5.next = 2;
+                _context6.next = 2;
                 return this.convertBlobToBase64(image);
 
               case 2:
-                base64 = _context5.sent;
-                return _context5.abrupt("return", new Promise(function (resolve, reject) {
+                base64 = _context6.sent;
+                return _context6.abrupt("return", new Promise(function (resolve, reject) {
                   ipfs.add(base64, function (err, result) {
                     console.log(result);
                     if (err) reject(new DOMException("Couldn't add metadata to IPFS"));
@@ -300,10 +355,10 @@ function () {
 
               case 4:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this);
+        }, _callee6, this);
       }));
 
       return function addMetaData(_x5, _x6, _x7) {
@@ -316,53 +371,58 @@ function () {
 }();
 
 
+// EXTERNAL MODULE: external "next/head"
+var head_ = __webpack_require__(11);
+var head__default = /*#__PURE__*/__webpack_require__.n(head_);
 
-/***/ }),
+// EXTERNAL MODULE: external "react-typography"
+var external__react_typography_ = __webpack_require__(12);
+var external__react_typography__default = /*#__PURE__*/__webpack_require__.n(external__react_typography_);
 
-/***/ "./pages/index.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+// EXTERNAL MODULE: external "typography"
+var external__typography_ = __webpack_require__(13);
+var external__typography__default = /*#__PURE__*/__webpack_require__.n(external__typography_);
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Index; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator__ = __webpack_require__("@babel/runtime/regenerator");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__("react");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__js_metadata_js__ = __webpack_require__("./js/metadata.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_next_head__ = __webpack_require__("next/head");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_next_head___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_next_head__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_typography__ = __webpack_require__("react-typography");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_typography___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_typography__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_typography__ = __webpack_require__("typography");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_typography___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_typography__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_typography_theme_github__ = __webpack_require__("typography-theme-github");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_typography_theme_github___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_typography_theme_github__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__material_ui_core_Button__ = __webpack_require__("@material-ui/core/Button");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__material_ui_core_Button___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__material_ui_core_Button__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__material_ui_core_TextField__ = __webpack_require__("@material-ui/core/TextField");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__material_ui_core_TextField___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__material_ui_core_TextField__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__material_ui_core_Paper__ = __webpack_require__("@material-ui/core/Paper");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__material_ui_core_Paper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__material_ui_core_Paper__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_react_json_pretty__ = __webpack_require__("react-json-pretty");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_react_json_pretty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_react_json_pretty__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_magic_dropzone__ = __webpack_require__("react-magic-dropzone");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_react_magic_dropzone___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_react_magic_dropzone__);
+// EXTERNAL MODULE: external "typography-theme-github"
+var external__typography_theme_github_ = __webpack_require__(14);
+var external__typography_theme_github__default = /*#__PURE__*/__webpack_require__.n(external__typography_theme_github_);
 
-var _jsxFileName = "/Users/alexander/Node/ethtective.cafe/pages/index.js";
+// EXTERNAL MODULE: external "@material-ui/core/Button"
+var Button_ = __webpack_require__(15);
+var Button__default = /*#__PURE__*/__webpack_require__.n(Button_);
+
+// EXTERNAL MODULE: external "@material-ui/core/TextField"
+var TextField_ = __webpack_require__(16);
+var TextField__default = /*#__PURE__*/__webpack_require__.n(TextField_);
+
+// EXTERNAL MODULE: external "@material-ui/core/Paper"
+var Paper_ = __webpack_require__(17);
+var Paper__default = /*#__PURE__*/__webpack_require__.n(Paper_);
+
+// EXTERNAL MODULE: external "react-json-pretty"
+var external__react_json_pretty_ = __webpack_require__(18);
+var external__react_json_pretty__default = /*#__PURE__*/__webpack_require__.n(external__react_json_pretty_);
+
+// EXTERNAL MODULE: external "react-magic-dropzone"
+var external__react_magic_dropzone_ = __webpack_require__(19);
+var external__react_magic_dropzone__default = /*#__PURE__*/__webpack_require__.n(external__react_magic_dropzone_);
+
+// CONCATENATED MODULE: ./pages/index.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return pages_Index; });
+
 
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
+function pages__asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } } function _next(value) { step("next", value); } function _throw(err) { step("throw", err); } _next(); }); }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function pages__classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+function pages__defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function pages__createClass(Constructor, protoProps, staticProps) { if (protoProps) pages__defineProperties(Constructor.prototype, protoProps); if (staticProps) pages__defineProperties(Constructor, staticProps); return Constructor; }
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
@@ -380,12 +440,12 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
-__WEBPACK_IMPORTED_MODULE_6_typography_theme_github___default.a.headerFontFamily = ["Roboto", "sans-serif"];
-__WEBPACK_IMPORTED_MODULE_6_typography_theme_github___default.a.bodyFontFamily = ["Roboto", "sans-serif"];
-__WEBPACK_IMPORTED_MODULE_6_typography_theme_github___default.a.headerWeight = 300;
-__WEBPACK_IMPORTED_MODULE_6_typography_theme_github___default.a.bodyWeight = 300;
+external__typography_theme_github__default.a.headerFontFamily = ["Roboto", "sans-serif"];
+external__typography_theme_github__default.a.bodyFontFamily = ["Roboto", "sans-serif"];
+external__typography_theme_github__default.a.headerWeight = 300;
+external__typography_theme_github__default.a.bodyWeight = 300;
 
-__WEBPACK_IMPORTED_MODULE_6_typography_theme_github___default.a.overrideThemeStyles = function (_ref, options) {
+external__typography_theme_github__default.a.overrideThemeStyles = function (_ref, options) {
   var rhythm = _ref.rhythm;
   return {
     "h1,h2,h3,h4": {
@@ -399,10 +459,10 @@ __WEBPACK_IMPORTED_MODULE_6_typography_theme_github___default.a.overrideThemeSty
   };
 };
 
-var typography = new __WEBPACK_IMPORTED_MODULE_5_typography___default.a(__WEBPACK_IMPORTED_MODULE_6_typography_theme_github___default.a);
+var typography = new external__typography__default.a(external__typography_theme_github__default.a);
 var metaData = {};
 
-var Index =
+var pages_Index =
 /*#__PURE__*/
 function (_React$Component) {
   _inherits(Index, _React$Component);
@@ -410,7 +470,7 @@ function (_React$Component) {
   function Index(props) {
     var _this;
 
-    _classCallCheck(this, Index);
+    pages__classCallCheck(this, Index);
 
     _this = _possibleConstructorReturn(this, (Index.__proto__ || Object.getPrototypeOf(Index)).call(this, props));
     Object.defineProperty(_assertThisInitialized(_this), "onInputChange", {
@@ -418,20 +478,19 @@ function (_React$Component) {
       enumerable: true,
       writable: true,
       value: function () {
-        var _value = _asyncToGenerator(
+        var _value = pages__asyncToGenerator(
         /*#__PURE__*/
-        __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default.a.mark(function _callee(e) {
-          return __WEBPACK_IMPORTED_MODULE_0__babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+        regenerator__default.a.mark(function _callee(e) {
+          return regenerator__default.a.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  console.log(e.target.value);
-
+                  // console.log(e.target.value);
                   _this.setState({
                     address: e.target.value
                   });
 
-                case 2:
+                case 1:
                 case "end":
                   return _context.stop();
               }
@@ -444,15 +503,13 @@ function (_React$Component) {
         };
       }()
     });
-    Object.defineProperty(_assertThisInitialized(_this), "onViewAddress", {
+    Object.defineProperty(_assertThisInitialized(_this), "viewAddress", {
       configurable: true,
       enumerable: true,
       writable: true,
-      value: function value(e) {
-        console.log("pressed");
-        metaData.getAddress(_this.state.address).then(function (response) {
-          console.log(response);
-
+      value: function value(address) {
+        metaData.getAddress(address).then(function (response) {
+          // console.log(response);
           if (response.image) {
             var ipfs = metaData.lookUp(response.image, function (result) {
               var image = result;
@@ -470,12 +527,19 @@ function (_React$Component) {
         });
       }
     });
+    Object.defineProperty(_assertThisInitialized(_this), "onViewAddress", {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: function value(e) {
+        _this.viewAddress(_this.state.address);
+      }
+    });
     Object.defineProperty(_assertThisInitialized(_this), "onSubmit", {
       configurable: true,
       enumerable: true,
       writable: true,
       value: function value(e) {
-        console.log("pressed");
         metaData.addMetaData(_this.state.saveAddress, _this.state.saveName, _this.state.file);
 
         _this.setState({
@@ -488,8 +552,7 @@ function (_React$Component) {
       enumerable: true,
       writable: true,
       value: function value(accepted, rejected, links) {
-        console.log(accepted);
-
+        // console.log(accepted);
         _this.setState({
           file: accepted
         });
@@ -501,9 +564,8 @@ function (_React$Component) {
       writable: true,
       value: function value(prop) {
         return function (event) {
-          _this.setState(_defineProperty({}, prop, event.target.value));
+          _this.setState(_defineProperty({}, prop, event.target.value)); // console.log(this.state);
 
-          console.log(_this.state);
         };
       }
     });
@@ -514,312 +576,184 @@ function (_React$Component) {
         name: "",
         image: ""
       },
-      price: "NaN"
+      price: "NaN",
+      network: 3
     };
     return _this;
   }
 
-  _createClass(Index, [{
+  pages__createClass(Index, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
 
-      metaData = new __WEBPACK_IMPORTED_MODULE_2__js_metadata_js__["a" /* default */]();
+      metaData = new metadata_MetaDataContract();
       metaData.getPrice().then(function (result) {
-        console.log(result);
-
+        // console.log(result);
         _this2.setState({
           price: result
         });
       });
+      metaData.getNetwork().then(function (result) {
+        console.log(result);
+
+        _this2.setState({
+          network: parseInt(result)
+        });
+      });
+      this.viewAddress(this.state.address);
     }
   }, {
     key: "render",
     value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("div", {
+      return external__react__default.a.createElement("div", {
         "class": "markdown",
         style: {
           maxWidth: "42rem",
           marginLeft: "auto",
           marginRight: "auto",
           padding: "1.5rem 1.125rem",
-          paddingTop: "1.5rem"
-        },
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 96
+          paddingTop: "1.5rem",
+          overflow: "hidden",
+          textOverflow: "ellipsis"
         }
-      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_next_head___default.a, {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 106
+      }, external__react__default.a.createElement(head__default.a, null, external__react__default.a.createElement(external__react_typography_["TypographyStyle"], {
+        typography: typography
+      }), external__react__default.a.createElement(external__react_typography_["GoogleFont"], {
+        typography: typography
+      })), external__react__default.a.createElement("h1", null, "Metadata Uploader "), external__react__default.a.createElement("p", null, this.state.network !== 3 ? external__react__default.a.createElement("b", {
+        style: {
+          color: "red"
         }
-      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_typography__["TypographyStyle"], {
-        typography: typography,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 107
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4_react_typography__["GoogleFont"], {
-        typography: typography,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 108
-        }
-      })), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("h1", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 111
-        }
-      }, "Metadata Uploader"), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("p", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 112
-        }
-      }, "Upload the following metadata for ", this.state.price, " Eth:"), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("form", {
-        "class": "",
+      }, "Please connect to Ropsten test network") : ""), "Ropsten Testnet Contract:", " ", external__react__default.a.createElement("code", null, metaData.contract_address), external__react__default.a.createElement("p", null, "Upload the following metadata for ", this.state.price, " Eth:"), external__react__default.a.createElement("form", {
         noValidate: true,
-        autoComplete: "off",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 113
-        }
-      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__material_ui_core_TextField___default.a, {
+        autoComplete: "off"
+      }, external__react__default.a.createElement(TextField__default.a, {
         fullWidth: true,
         label: "Address",
-        onChange: this.handleSaveChange("saveAddress"),
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 114
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__material_ui_core_TextField___default.a, {
+        onChange: this.handleSaveChange("saveAddress")
+      }), external__react__default.a.createElement(TextField__default.a, {
         fullWidth: true,
         label: "Name",
-        onChange: this.handleSaveChange("saveName"),
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 119
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("br", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 124
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("br", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 125
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("label", {
-        htmlFor: "flat-button-file",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 126
-        }
-      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__material_ui_core_Button___default.a, {
+        onChange: this.handleSaveChange("saveName")
+      }), external__react__default.a.createElement("br", null), external__react__default.a.createElement("br", null), external__react__default.a.createElement("label", {
+        htmlFor: "flat-button-file"
+      }, external__react__default.a.createElement(Button__default.a, {
         size: "small",
         component: "span",
-        className: "image_upload",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 127
-        }
-      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11_react_magic_dropzone___default.a, {
+        className: "image_upload"
+      }, external__react__default.a.createElement(external__react_magic_dropzone__default.a, {
         className: "Dropzone",
         accept: "image/jpeg, image/png, .jpg, .jpeg, .png, .svg",
-        onDrop: this.onDrop,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 128
-        }
-      }, "Upload Image"))), " ", __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__material_ui_core_Button___default.a, {
+        onDrop: this.onDrop
+      }, "Upload Image"))), " ", external__react__default.a.createElement(Button__default.a, {
         size: "small",
         variant: "contained",
-        onClick: this.onSubmit,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 137
-        }
-      }, "Save To Ethereum")), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("h1", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 142
-        }
-      }, "Metadata Viewer"), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("p", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 143
-        }
-      }, "Contract at: "), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("pre", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 145
-        }
-      }, __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("code", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 146
-        }
-      }, metaData.contract_address)), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("img", {
+        onClick: this.onSubmit
+      }, "Save To Ethereum")), external__react__default.a.createElement("h1", null, "Metadata Viewer"), external__react__default.a.createElement("img", {
         src: this.state.metadata.image,
         style: {
           width: 64,
           height: 64
-        },
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 148
         }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_10_react_json_pretty___default.a, {
+      }), external__react__default.a.createElement(external__react_json_pretty__default.a, {
         language: "JSON",
-        json: JSON.stringify(this.state.metadata),
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 152
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__material_ui_core_TextField___default.a, {
+        json: JSON.stringify(this.state.metadata)
+      }), external__react__default.a.createElement(TextField__default.a, {
         label: "Address",
         fullWidth: true,
         value: this.state.address,
-        onChange: this.onInputChange,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 156
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("br", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 162
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement("br", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 163
-        }
-      }), __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__material_ui_core_Button___default.a, {
+        onChange: this.onInputChange
+      }), external__react__default.a.createElement("br", null), external__react__default.a.createElement("br", null), external__react__default.a.createElement(Button__default.a, {
         size: "small",
         variant: "contained",
-        onClick: this.onViewAddress,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 164
-        }
+        onClick: this.onViewAddress
       }, "View"));
     }
   }]);
 
   return Index;
-}(__WEBPACK_IMPORTED_MODULE_1_react___default.a.Component);
+}(external__react__default.a.Component);
 
 
 
 /***/ }),
-
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__("./pages/index.js");
-
-
-/***/ }),
-
-/***/ "@babel/runtime/regenerator":
-/***/ (function(module, exports) {
-
-module.exports = require("@babel/runtime/regenerator");
-
-/***/ }),
-
-/***/ "@material-ui/core/Button":
-/***/ (function(module, exports) {
-
-module.exports = require("@material-ui/core/Button");
-
-/***/ }),
-
-/***/ "@material-ui/core/Paper":
-/***/ (function(module, exports) {
-
-module.exports = require("@material-ui/core/Paper");
-
-/***/ }),
-
-/***/ "@material-ui/core/TextField":
-/***/ (function(module, exports) {
-
-module.exports = require("@material-ui/core/TextField");
-
-/***/ }),
-
-/***/ "eip55":
-/***/ (function(module, exports) {
-
-module.exports = require("eip55");
-
-/***/ }),
-
-/***/ "ethjs":
+/* 7 */
 /***/ (function(module, exports) {
 
 module.exports = require("ethjs");
 
 /***/ }),
+/* 8 */
+/***/ (function(module, exports) {
 
-/***/ "ipfs-mini":
+module.exports = require("eip55");
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+module.exports = [{"constant":false,"inputs":[{"name":"_address","type":"address"},{"name":"_name","type":"string"},{"name":"_logo_ipfs","type":"string"}],"name":"addAddress","outputs":[{"name":"","type":"string"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"_address","type":"address"},{"name":"_name","type":"string"},{"name":"_logo_ipfs","type":"string"}],"name":"addByOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"getMeOffTheFuckingList","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"lootDonationBox","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_price","type":"uint256"}],"name":"setPrice","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"adresses","outputs":[{"name":"_address","type":"address"},{"name":"_name","type":"string"},{"name":"_logo_ipfs","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"a","type":"address"}],"name":"getByAddress","outputs":[{"name":"","type":"address"},{"name":"","type":"string"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"i","type":"uint256"}],"name":"getByIndex","outputs":[{"name":"","type":"address"},{"name":"","type":"string"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getPrice","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"keys","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"}]
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = require("ipfs-mini");
 
 /***/ }),
-
-/***/ "next/head":
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = require("next/head");
 
 /***/ }),
-
-/***/ "react":
-/***/ (function(module, exports) {
-
-module.exports = require("react");
-
-/***/ }),
-
-/***/ "react-json-pretty":
-/***/ (function(module, exports) {
-
-module.exports = require("react-json-pretty");
-
-/***/ }),
-
-/***/ "react-magic-dropzone":
-/***/ (function(module, exports) {
-
-module.exports = require("react-magic-dropzone");
-
-/***/ }),
-
-/***/ "react-typography":
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-typography");
 
 /***/ }),
-
-/***/ "typography":
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = require("typography");
 
 /***/ }),
-
-/***/ "typography-theme-github":
+/* 14 */
 /***/ (function(module, exports) {
 
 module.exports = require("typography-theme-github");
 
-/***/ })
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
 
-/******/ });
-//# sourceMappingURL=index.js.map
+module.exports = require("@material-ui/core/Button");
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+module.exports = require("@material-ui/core/TextField");
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = require("@material-ui/core/Paper");
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-json-pretty");
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-magic-dropzone");
+
+/***/ })
+/******/ ]);

@@ -6,7 +6,9 @@
     "scripts": {
         "dev": "next -p 3800",
         "build": "next build",
-        "start": "next start"
+        "start": "next start",
+        "test-upload":
+            "next build && now -n ethtectivecafe  && now alias cafe.ethtective.com"
     },
     "author": "",
     "license": "ISC",

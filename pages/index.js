@@ -35,28 +35,33 @@ export default class Index extends React.Component {
             address: "0x09ca59e18c58f25b092a0f2670928f5d0656a331",
             metadata: { address: "", name: "", image: "" },
             price: "NaN",
+            network: 3,
         };
     }
 
     componentDidMount() {
         metaData = new metadata();
         metaData.getPrice().then(result => {
-            console.log(result);
+            // console.log(result);
             this.setState({ price: result });
         });
+        metaData.getNetwork().then(result => {
+            console.log(result);
+            this.setState({ network: parseInt(result) });
+        });
+        this.viewAddress(this.state.address);
     }
 
     onInputChange = async e => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         this.setState({
             address: e.target.value,
         });
     };
 
-    onViewAddress = e => {
-        console.log("pressed");
-        metaData.getAddress(this.state.address).then(response => {
-            console.log(response);
+    viewAddress = address => {
+        metaData.getAddress(address).then(response => {
+            // console.log(response);
             if (response.image) {
                 let ipfs = metaData.lookUp(response.image, result => {
                     let image = result;
@@ -69,8 +74,11 @@ export default class Index extends React.Component {
         });
     };
 
+    onViewAddress = e => {
+        this.viewAddress(this.state.address);
+    };
+
     onSubmit = e => {
-        console.log("pressed");
         metaData.addMetaData(
             this.state.saveAddress,
             this.state.saveName,
@@ -80,7 +88,7 @@ export default class Index extends React.Component {
     };
 
     onDrop = (accepted, rejected, links) => {
-        console.log(accepted);
+        // console.log(accepted);
         this.setState({
             file: accepted,
         });
@@ -88,7 +96,7 @@ export default class Index extends React.Component {
 
     handleSaveChange = prop => event => {
         this.setState({ [prop]: event.target.value });
-        console.log(this.state);
+        // console.log(this.state);
     };
 
     render() {
@@ -101,16 +109,28 @@ export default class Index extends React.Component {
                     marginRight: "auto",
                     padding: "1.5rem 1.125rem",
                     paddingTop: "1.5rem",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
                 }}
             >
                 <Head>
                     <TypographyStyle typography={typography} />
                     <GoogleFont typography={typography} />
                 </Head>
-
-                <h1>Metadata Uploader</h1>
+                <h1>Metadata Uploader </h1>
+                <p>
+                    {this.state.network !== 3 ? (
+                        <b style={{ color: "red" }}>
+                            Please connect to Ropsten test network
+                        </b>
+                    ) : (
+                        ""
+                    )}
+                </p>
+                Ropsten Testnet Contract:{" "}
+                <code>{metaData.contract_address}</code>
                 <p>Upload the following metadata for {this.state.price} Eth:</p>
-                <form class="" noValidate autoComplete="off">
+                <form noValidate autoComplete="off">
                     <TextField
                         fullWidth
                         label="Address"
@@ -124,7 +144,11 @@ export default class Index extends React.Component {
                     <br />
                     <br />
                     <label htmlFor="flat-button-file">
-                        <Button size="small" component="span" className={"image_upload"}>
+                        <Button
+                            size="small"
+                            component="span"
+                            className={"image_upload"}
+                        >
                             <MagicDropzone
                                 className="Dropzone"
                                 accept="image/jpeg, image/png, .jpg, .jpeg, .png, .svg"
@@ -134,17 +158,15 @@ export default class Index extends React.Component {
                             </MagicDropzone>
                         </Button>
                     </label>{" "}
-                    <Button size="small" variant="contained" onClick={this.onSubmit}>
+                    <Button
+                        size="small"
+                        variant="contained"
+                        onClick={this.onSubmit}
+                    >
                         Save To Ethereum
                     </Button>
                 </form>
-
                 <h1>Metadata Viewer</h1>
-                <p>Contract at: </p>
-
-                <pre>
-                    <code>{metaData.contract_address}</code>
-                </pre>
                 <img
                     src={this.state.metadata.image}
                     style={{ width: 64, height: 64 }}
@@ -161,7 +183,11 @@ export default class Index extends React.Component {
                 />
                 <br />
                 <br />
-                <Button size="small" variant="contained" onClick={this.onViewAddress}>
+                <Button
+                    size="small"
+                    variant="contained"
+                    onClick={this.onViewAddress}
+                >
                     View
                 </Button>
             </div>
