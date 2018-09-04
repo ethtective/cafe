@@ -3,6 +3,7 @@
 /build
 *.lock
 *.log
+.next
 
 # Editor directories and files
 .idea
