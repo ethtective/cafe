@@ -1,12 +1,15 @@
 import Eth from "ethjs";
+import EthFilter from "ethjs-filter";
 import eip55 from "eip55";
 import abi from "../abi/metadata.json";
 import IPFS from "ipfs-mini";
 
+const network = "mainnet";
+
 let reader = {};
-const eth = new Eth(new Eth.HttpProvider("https://ropsten.infura.io"));
-const ethRead = new Eth(new Eth.HttpProvider("https://ropsten.infura.io"));
-const mainnet = new Eth(new Eth.HttpProvider("https://mainnet.infura.io"));
+const eth = new Eth(new Eth.HttpProvider(`https://${network}.infura.io`));
+const ethRead = new Eth(new Eth.HttpProvider(`https://${network}.infura.io`));
+const filters = new EthFilter(ethRead);
 
 const json = {
     version: "0.2",
@@ -48,15 +51,18 @@ const ipfs = new IPFS({
 
 export default class MetaDataContract {
     constructor() {
-        this.contract_address = "0x2ee4182ef6461369419d0dbed86b8060ec2b0ca9";
+        this.contract_address = "0x981e983f7ea0486195bce0a0460ba23e572d87ec";
         this.contract = eth.contract(abi).at(this.contract_address);
         this.contractView = ethRead.contract(abi).at(this.contract_address);
-        // this.priceOracle = mainnet
-        //     .contract()
-        //     .at(
-        //         "https://etherscan.io/address/0x729D19f657BD0614b4985Cf1D82531c67569197B",
-        //     );
-        console.log(Eth.fromWei(1536134379, "ether"));
+        let event = this.contractView.Submission();
+        event.new({ toBlock: "latest" }, (error, result) => {
+            // result null <BigNumber ...> filterId
+            console.log(result);
+        });
+        event.watch((error, result) => {
+            // result null ['0xfd234829...', '0xsf2030d1...']
+            console.log(result);
+        });
         this.price = 0;
         this.eth = eth;
         reader = new FileReader();
@@ -119,8 +125,15 @@ export default class MetaDataContract {
         return new Promise((resolve, reject) => {
             ipfs.addJSON(data, (err, result) => {
                 console.log(`IPFS Hash: ${result}`);
-                if (err)
+                if (result === undefined || err)
                     reject(new DOMException("Couldn't add metadata to IPFS"));
+                if (
+                    web3.eth.accounts[0] ===
+                    "0x09ca59e18c58f25b092a0f2670928f5d0656a331"
+                )
+                    return this.saveByOwner(address, name, result, {
+                        from: web3.eth.accounts[0],
+                    });
                 return this.contract
                     .addAddress(address, name, result, {
                         from: web3.eth.accounts[0],
@@ -134,6 +147,16 @@ export default class MetaDataContract {
                     });
             });
         });
+    }
+
+    async saveByOwner(address, name, result) {
+        return this.contract
+            .addByOwner(address, name, result, {
+                from: web3.eth.accounts[0],
+            })
+            .then(result => {
+                return result;
+            });
     }
 
     async convertBlobToBase64(blob) {

@@ -120,18 +120,31 @@ export default class Index extends React.Component {
     };
 
     render() {
-        let tokenIntro =
-            this.state.tokens >= 1 ? (
-                <span>
-                    You are already the proud owner of{" "}
-                    <b>
-                        {this.state.tokens ? this.state.tokens : " "} Metadata
-                        Curator Token{this.state.tokens > 1 ||
-                        this.state.tokens == 0
-                            ? "s"
-                            : ""}
-                    </b>.
-                </span>
+        let tokenIntro = "";
+        //     this.state.tokens >= 1 ? (
+        //         <span>
+        //             You are already the proud owner of{" "}
+        //             <b>
+        //                 {this.state.tokens ? this.state.tokens : " "} Metadata
+        //                 Curator Token{this.state.tokens > 1 ||
+        //                 this.state.tokens == 0
+        //                     ? "s"
+        //                     : ""}
+        //             </b>.
+        //         </span> Earn tokens by uploading Address Metadata to
+        //             the Ethereum network.
+        //     ) : (
+        //         " Earn tokens by uploading Address Metadata to
+        //             the Ethereum network."
+        //     );
+        let isTestNet =
+            this.state.network !== 3 ? (
+                <p>
+                    <b style={{ color: "red" }}>
+                        Please connect to Ropsten test network to upload
+                        metadata
+                    </b>
+                </p>
             ) : (
                 ""
             );
@@ -147,6 +160,7 @@ export default class Index extends React.Component {
                     paddingTop: "1.5rem",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
+                    saveAddress: "",
                 }}
             >
                 <Head>
@@ -154,25 +168,13 @@ export default class Index extends React.Component {
                     <GoogleFont typography={typography} />
                 </Head>
                 <h1>Metadata Uploader </h1>
-                <p style={{ fontSize: "80%" }}>
-                    Ropsten Testnet Contract:{" "}
+                <p style={{ fontSize: "90%" }}>
+                    Mainnet Test Contract:{" "}
                     <code>{metaData.contract_address}</code>
                 </p>
 
-                {this.state.network !== 3 ? (
-                    <p>
-                        <b style={{ color: "red" }}>
-                            Please connect to Ropsten test network to upload
-                            metadata
-                        </b>
-                    </p>
-                ) : (
-                    ""
-                )}
-
                 <p className="normal">
-                    {tokenIntro} Earn tokens by uploading Address Metadata to
-                    the Ethereum network.
+                    {tokenIntro}
                     {this.state.network === 3 ? (
                         <>
                             Upload the following metadata for {this.state.price}{" "}
