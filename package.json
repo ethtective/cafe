@@ -21,7 +21,6 @@
         "react": "^16.4.2",
         "react-dom": "^16.4.2",
         "react-json-pretty": "^1.7.9",
-        "react-json-view": "https://github.com/mac-s-g/react-json-view",
         "react-magic-dropzone": "^1.0.1",
         "react-syntax-highlighter": "^8.0.1",
         "react-typography": "^0.16.13",
