@@ -48,7 +48,7 @@ const ipfs = new IPFS({
 
 export default class MetaDataContract {
     constructor() {
-        this.contract_address = process.env.METADATA_CONTRACT;
+        this.contract_address = "0x2ee4182ef6461369419d0dbed86b8060ec2b0ca9";
         this.contract = eth.contract(abi).at(this.contract_address);
         this.contractView = ethRead.contract(abi).at(this.contract_address);
         // this.priceOracle = mainnet
@@ -80,6 +80,14 @@ export default class MetaDataContract {
 
             return Eth.fromWei(result[0], "ether");
         });
+    }
+
+    async getTokenBalance() {
+        return this.contractView
+            .balanceOf(web3.eth.accounts[0])
+            .then(response => {
+                return Eth.fromWei(response[0], "wei");
+            });
     }
 
     async getAddressData(address) {

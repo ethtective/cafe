@@ -37,6 +37,7 @@ export default class Index extends React.Component {
             metadata: { address: "", name: "", image: "" },
             price: "NaN",
             network: 3,
+            tokens: "",
         };
     }
 
@@ -64,6 +65,10 @@ export default class Index extends React.Component {
         metaData
             .getAddressData(address)
             .then(contractdata => {
+                metaData.getTokenBalance().then(response => {
+                    console.log(response);
+                    this.setState({ tokens: response });
+                });
                 console.log(contractdata);
                 if (contractdata.data.metadata.logo) {
                     let image = contractdata.data.metadata.logo;
@@ -115,6 +120,22 @@ export default class Index extends React.Component {
     };
 
     render() {
+        let tokenIntro =
+            this.state.tokens >= 1 ? (
+                <span>
+                    You are already the proud owner of{" "}
+                    <b>
+                        {this.state.tokens ? this.state.tokens : " "} Metadata
+                        Curator Token{this.state.tokens > 1 ||
+                        this.state.tokens == 0
+                            ? "s"
+                            : ""}
+                    </b>.
+                </span>
+            ) : (
+                ""
+            );
+
         return (
             <div
                 className="markdown"
@@ -133,26 +154,30 @@ export default class Index extends React.Component {
                     <GoogleFont typography={typography} />
                 </Head>
                 <h1>Metadata Uploader </h1>
-                <p>
-                    {this.state.network !== 3 ? (
+                <p style={{ fontSize: "80%" }}>
+                    Ropsten Testnet Contract:{" "}
+                    <code>{metaData.contract_address}</code>
+                </p>
+
+                {this.state.network !== 3 ? (
+                    <p>
                         <b style={{ color: "red" }}>
                             Please connect to Ropsten test network to upload
                             metadata
                         </b>
-                    ) : (
-                        ""
-                    )}
-                </p>
-                Ropsten Testnet Contract:{" "}
-                <code>{metaData.contract_address}</code>
-                <p>
+                    </p>
+                ) : (
+                    ""
+                )}
+
+                <p className="normal">
+                    {tokenIntro} Earn tokens by uploading Address Metadata to
+                    the Ethereum network.
                     {this.state.network === 3 ? (
-                        <p>
-                            <b>
-                                Upload the following metadata for{" "}
-                                {this.state.price} Eth:
-                            </b>
-                        </p>
+                        <>
+                            Upload the following metadata for {this.state.price}{" "}
+                            Eth:
+                        </>
                     ) : (
                         ""
                     )}
@@ -273,6 +298,9 @@ export default class Index extends React.Component {
                     .monofont input {
                         font-family: monospace;
                         font-size: 120%;
+                    }
+                    .normal {
+                        font-weight: normal;
                     }
                 `}</style>
             </div>
