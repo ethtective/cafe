@@ -1,6 +1,7 @@
 import metadata from "../js/metadata.js";
 import Head from "next/head";
 import { TypographyStyle, GoogleFont } from "react-typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "typography";
 import githubTheme from "typography-theme-github";
 import Button from "@material-ui/core/Button";
@@ -103,7 +104,7 @@ export default class Index extends React.Component {
     formatData = data => {};
 
     onDrop = (accepted, rejected, links) => {
-        // console.log(accepted);
+        console.log(accepted);
         this.setState({
             file: accepted,
         });
@@ -195,7 +196,10 @@ export default class Index extends React.Component {
                                     accept="image/jpeg, image/png, .jpg, .jpeg, .png, .svg"
                                     onDrop={this.onDrop}
                                 >
-                                    Upload Image
+                                    {this.state.file ? "" : ""}
+                                    {this.state.file
+                                        ? this.state.file[0].name + " uploaded!"
+                                        : "Upload Image"}
                                 </MagicDropzone>
                             </Button>
                         </label>{" "}

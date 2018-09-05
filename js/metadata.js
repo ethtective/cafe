@@ -48,7 +48,7 @@ const ipfs = new IPFS({
 
 export default class MetaDataContract {
     constructor() {
-        this.contract_address = "0xe5a16d3ff0e4bd6204c05061f47c12264f315af4";
+        this.contract_address = process.env.METADATA_CONTRACT;
         this.contract = eth.contract(abi).at(this.contract_address);
         this.contractView = ethRead.contract(abi).at(this.contract_address);
         // this.priceOracle = mainnet
@@ -66,9 +66,6 @@ export default class MetaDataContract {
         ) {
             eth.setProvider(window.web3.currentProvider);
             // console.log("metamask!");
-        } else {
-            // keep current infura provider
-            // console.log("yay");
         }
     }
 

@@ -4,11 +4,17 @@
     "description": "Metadata Uploader for Ethtective.com",
     "main": "index.js",
     "scripts": {
-        "dev": "next -p 3700",
+        "dev": "next -p 3800",
         "build": "next build",
         "start": "next start",
-        "test-upload": "next build && now -n ethtectivecafe  && now alias cafe.ethtective.com"
+        "test-upload":
+            "next build && now rm ethtectivecafe --f -y && now -n ethtectivecafe  && now alias"
     },
+    "now": {
+        "alias": ["cafe.ethtective.com"]
+    },
+    "author": "Alexander Mangel",
+    "license": "GNU LGPLv3",
     "author": "",
     "license": "ISC",
     "dependencies": {
@@ -26,5 +32,9 @@
         "react-typography": "^0.16.13",
         "typography": "^0.16.17",
         "typography-theme-github": "^0.15.10"
-    }
+    },
+    "bugs": {
+        "url": "https://github.com/ethtective/ethtective.com/issues"
+    },
+    "homepage": "https://www.ethtective.com"
 }
