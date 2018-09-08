@@ -4,6 +4,6 @@
 
 # Metadata Registry
 
-Ethtective is an Ethereum transaction explorer that gives you better overview of blockchain activity than traditional blockchain explorers. This relies on adding visual cues based on data gathered from various APIs. Sadly, this means that this data remains locked up in silos and is not readily available on-chain to other contracts. 
+Ethtective is an Ethereum transaction explorer that gives you better overview of blockchain activity than traditional blockchain explorers. This relies on adding visual cues based on data gathered from various APIs. Sadly, this data remains locked up behind APIs in silos, is not readily available on-chain to other contracts, is very hard to change if it is wrong and often hard to add to as maintainers add or update new information at their own leisure while making money from hoarding the data. 
 
 https://cafe.ethtective.com is a proof of concept to illustrate the value of on-chain Metadata. More is forthcoming!
