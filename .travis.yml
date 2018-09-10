@@ -3,6 +3,7 @@ node_js:
   - 10.1
 install:
   - yarn
+  - npm
 cache:
   directories:
     - "node_modules" # This will tell Travis CI to cache the dependencies
@@ -10,7 +11,7 @@ script:
   - npm run build
 before_deploy: npm install now --no-save # Install Now CLI on Travis
 deploy:
-  provider: script
+  - provider: script
     script: now --token $NOW_TOKEN -e NODE_ENV='production' -e PUBLIC_URL='http://canary.ethtective.com' --dotenv -n cafe.ethtective && now alias --token $NOW_TOKEN #let's see if this works
     skip_cleanup: true
     on:
