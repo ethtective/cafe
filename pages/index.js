@@ -1,12 +1,15 @@
 import metadata from "../js/metadata.js";
+import LuckyList from "./luckylist";
 import Head from "next/head";
 import { TypographyStyle, GoogleFont } from "react-typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "typography";
 import githubTheme from "typography-theme-github";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 import MagicDropzone from "react-magic-dropzone";
 import JSONPretty from "react-json-pretty";
 
@@ -35,23 +38,46 @@ export default class Index extends React.Component {
         this.state = {
             address: "",
             metadata: { address: "", name: "", image: "" },
-            price: "NaN",
+            price: 0,
             network: 3,
             tokens: "",
+            saveName: "",
+            saveUrl: "",
+            saveDescription: "",
+            saveAddress: "",
+            saveScam: false,
+            saveImageData: "",
         };
     }
 
-    componentDidMount() {
+    static getInitialProps({ query: { address, editMode } }) {
+        return { address: address, editMode: editMode };
+    }
+
+    componentWillMount() {
         metaData = new metadata();
-        this.setState({ address: metaData.contract_address });
         metaData.getPrice().then(result => {
             // console.log(result);
             this.setState({ price: result });
         });
+
+        if (this.props.address) {
+            this.setState({ address: this.props.address });
+            this.viewAddress(this.props.address);
+            this.editAddress(this.props.address).catch(err => {
+                this.setState({ saveAddress: this.props.address });
+            });
+        } else {
+            this.setState({ address: metaData.contractAddress });
+            this.viewAddress(metaData.contractAddress);
+        }
+    }
+
+    componentDidMount() {
+        metaData.getMetamask();
         metaData.getNetwork().then(result => {
             this.setState({ network: parseInt(result) });
         });
-        this.viewAddress(metaData.contract_address);
     }
 
     onInputChange = async e => {
@@ -65,21 +91,14 @@ export default class Index extends React.Component {
         metaData
             .getAddressData(address)
             .then(contractdata => {
-                metaData.getTokenBalance().then(response => {
-                    console.log(response);
-                    this.setState({ tokens: response });
-                });
-                console.log(contractdata);
+                // console.log(contractdata);
+                this.setState({ address: address });
                 if (contractdata.data.metadata.logo) {
                     let image = contractdata.data.metadata.logo;
                     this.setState({ logo: image });
+                } else {
+                    this.setState({ logo: "" });
                 }
-                this.setState({
-                    saveName: contractdata.data.metadata.name,
-                    saveUrl: contractdata.data.metadata.url,
-                    saveDescription: contractdata.data.metadata.description,
-                    saveAddress: contractdata.address,
-                });
                 this.setState({ metadata: contractdata });
             })
             .catch(err => {
@@ -87,20 +106,54 @@ export default class Index extends React.Component {
             });
     };
 
-    onViewAddress = e => {
-        this.viewAddress(this.state.address);
+    editAddress = address => {
+        return metaData.getAddressData(address).then(contractdata => {
+            // console.log(contractdata);
+            if (contractdata.data.metadata.logo) {
+                let image = contractdata.data.metadata.logo;
+                this.setState({ logo: image, saveFile: image });
+            }
+            this.setState({
+                saveName: contractdata.data.metadata.name,
+                saveUrl: contractdata.data.metadata.url,
+                saveDescription: contractdata.data.metadata.description,
+                saveAddress: contractdata.address,
+                saveScam:
+                    contractdata.data.metadata.reputation.category === "Scam",
+            });
+            this.forceUpdate();
+            this.setState({ metadata: contractdata });
+        });
+    };
+
+    ethtective = () => {
+        window.open(
+            "https://canary.ethtective.com/" + this.state.address,
+            "_blank",
+        );
     };
 
     onSubmit = async e => {
-        const data = metaData.getEmptyObject();
+        let data = metaData.getEmptyObject();
+        // console.log(data);
         data.address = this.state.saveAddress;
         data.metadata.name = this.state.saveName;
         data.metadata.url = this.state.saveUrl;
         data.metadata.description = this.state.saveDescription;
+        // console.log(this.state.saveScam);
+        if (this.state.saveScam === true) {
+            // console.log("WHY");
+            data.metadata.reputation.status = "Blocked";
+            data.metadata.reputation.category = "Scam";
+        }
         if (this.state.file)
             data.metadata.logo = await metaData.convertBlobToBase64(
                 this.state.file,
             );
+        else if (this.state.saveFile) {
+            data.metadata.logo = this.state.saveFile;
+        }
+        console.log(data);
         metaData.storeMetadata(data.address, data).then(response => {
             this.setState({ address: this.state.saveAddress });
         });
@@ -109,7 +162,7 @@ export default class Index extends React.Component {
     formatData = data => {};
 
     onDrop = (accepted, rejected, links) => {
-        console.log(accepted);
+        // console.log(accepted);
         this.setState({
             file: accepted,
         });
@@ -119,35 +172,34 @@ export default class Index extends React.Component {
         this.setState({ [prop]: event.target.value });
     };
 
+    handleSaveCheck = name => event => {
+        this.setState({ [name]: event.target.checked });
+    };
+
     render() {
-        let tokenIntro = "";
-        //     this.state.tokens >= 1 ? (
-        //         <span>
-        //             You are already the proud owner of{" "}
-        //             <b>
-        //                 {this.state.tokens ? this.state.tokens : " "} Metadata
-        //                 Curator Token{this.state.tokens > 1 ||
-        //                 this.state.tokens == 0
-        //                     ? "s"
-        //                     : ""}
-        //             </b>.
-        //         </span> Earn tokens by uploading Address Metadata to
-        //             the Ethereum network.
-        //     ) : (
-        //         " Earn tokens by uploading Address Metadata to
-        //             the Ethereum network."
-        //     );
-        let isTestNet =
-            this.state.network !== 3 ? (
-                <p>
-                    <b style={{ color: "red" }}>
-                        Please connect to Ropsten test network to upload
-                        metadata
-                    </b>
-                </p>
-            ) : (
-                ""
-            );
+        let preview = this.state.file ? (
+            <img
+                src={this.state.file[0].preview}
+                style={{
+                    width: 64,
+                    height: 64,
+                    float: "left",
+                    marginTop: 15,
+                }}
+            />
+        ) : this.state.saveFile ? (
+            <img
+                src={this.state.saveFile}
+                style={{
+                    width: 64,
+                    height: 64,
+                    float: "left",
+                    marginTop: 15,
+                }}
+            />
+        ) : (
+            ""
+        );
 
         return (
             <div
@@ -166,29 +218,27 @@ export default class Index extends React.Component {
                 <Head>
                     <TypographyStyle typography={typography} />
                     <GoogleFont typography={typography} />
+                    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
                 </Head>
-                <h1>Metadata Uploader </h1>
+                {!this.props.editMode ? <LuckyList /> : ""}
+                <h1>Metadata Uploader</h1>
                 <p style={{ fontSize: "90%" }}>
-                    Mainnet Test Contract:{" "}
-                    <code>{metaData.contract_address}</code>
-                </p>
-
-                <p className="normal">
-                    {tokenIntro}
-                    {this.state.network === 3 ? (
-                        <>
-                            Upload the following metadata for {this.state.price}{" "}
-                            Eth:
-                        </>
-                    ) : (
-                        ""
-                    )}
+                    <span>
+                        <b style={{ color: "#00ffd9" }}>⚠️ Warning:</b> this is
+                        a prototype registry contract, data may be lost (but
+                        still counts as a donation!)
+                    </span>
                 </p>
                 <form noValidate autoComplete="off">
                     <TextField
                         fullWidth
+                        error={
+                            !metaData.isValidAddress(this.state.saveAddress) &&
+                            this.state.saveAddress.length > 0
+                        }
                         required={true}
                         label="Address"
+                        value={this.state.saveAddress}
                         onChange={this.handleSaveChange("saveAddress")}
                         className="top-padding monofont"
                     />
@@ -196,21 +246,39 @@ export default class Index extends React.Component {
                         fullWidth
                         required={true}
                         label="Name"
+                        value={this.state.saveName}
                         onChange={this.handleSaveChange("saveName")}
                         className="top-padding"
                     />
                     <TextField
                         fullWidth
                         label="Url"
+                        value={this.state.saveUrl}
                         onChange={this.handleSaveChange("saveUrl")}
                         className="top-padding"
                     />
                     <TextField
-                        fullWidth
                         label="Description"
+                        multiline
+                        fullWidth
+                        rowsMax="4"
+                        value={this.state.saveDescription}
                         onChange={this.handleSaveChange("saveDescription")}
                         className="top-padding"
+                        margin="normal"
                     />
+                    <FormGroup row>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={this.state.saveScam}
+                                    onChange={this.handleSaveCheck("saveScam")}
+                                />
+                            }
+                            label="Mark as scam"
+                        />
+                    </FormGroup>
+                    {preview}
                     <div className="button-aligner">
                         <label htmlFor="flat-button-file">
                             <Button
@@ -225,37 +293,76 @@ export default class Index extends React.Component {
                                 >
                                     {this.state.file ? "" : ""}
                                     {this.state.file
-                                        ? this.state.file[0].name + " uploaded!"
+                                        ? "✅ '" +
+                                          this.state.file[0].name +
+                                          "'' uploaded!"
                                         : "Upload Image"}
                                 </MagicDropzone>
                             </Button>
                         </label>{" "}
                         <Button
+                            disabled={
+                                !(
+                                    metaData.isValidAddress(
+                                        this.state.saveAddress,
+                                    ) && this.state.saveName.length > 0
+                                )
+                            }
                             size="small"
                             variant="contained"
                             onClick={this.onSubmit}
+                            className={" button"}
                         >
                             Save To Ethereum
                         </Button>
+                        <Button variant="outlined" disabled>
+                            {this.state.price} Ξ
+                        </Button>
                     </div>
                 </form>
+                <br />
                 <br />
                 <br />
                 <h1>Metadata Viewer</h1>
                 <TextField
                     label="Address"
                     fullWidth
+                    required
+                    error={
+                        this.state.address &&
+                        !metaData.isValidAddress(this.state.address) &&
+                        this.state.address.length > 0
+                    }
                     value={this.state.address}
                     onChange={this.onInputChange}
                     className="top-padding monofont"
                 />
                 <div className="button-aligner">
                     <Button
+                        disabled={!metaData.isValidAddress(this.state.address)}
                         size="small"
                         variant="contained"
-                        onClick={this.onViewAddress}
+                        onClick={this.editAddress}
+                        className={"button"}
+                    >
+                        Edit
+                    </Button>
+                    <Button
+                        disabled={!metaData.isValidAddress(this.state.address)}
+                        size="small"
+                        variant="contained"
+                        onClick={this.viewAddress}
+                        className={"button"}
                     >
                         View
+                    </Button>{" "}
+                    <Button
+                        disabled={!metaData.isValidAddress(this.state.address)}
+                        size="small"
+                        variant="contained"
+                        onClick={this.ethtective}
+                    >
+                        View on Ethtective
                     </Button>
                 </div>
                 <br />
@@ -265,10 +372,33 @@ export default class Index extends React.Component {
                     style={{
                         width: 64,
                         height: 64,
-                        border: "1px solid #dfdfdf",
                     }}
                 />
                 <JSONPretty json={JSON.stringify(this.state.metadata.data)} />
+                <br />
+                <br />
+                <br />
+                <h1>Further Reading</h1>
+                <p>
+                    🕵️ Mainnet Metadata Prototype Contract:{" "}
+                    <a
+                        href={
+                            "http://canary.ethtective.com/" +
+                            metaData.contractAddress
+                        }
+                        target="_blank"
+                    >
+                        <code>{metaData.contractAddress}</code>
+                    </a>
+                </p>
+                <p>
+                    ℹ️ The metadata stored into this contract is freely
+                    available by calling <code>.getByAddress(address)</code> on
+                    the contract. This function returns a tuple{" "}
+                    <code>(address, name, ipfs)</code>. If Metadata has been
+                    registered, JSON can be retrieved by looking up the IPFS
+                    address.
+                </p>
                 <style global jsx>{`
                     .json-pretty {
                         line-height: 1.75;
@@ -288,7 +418,7 @@ export default class Index extends React.Component {
                         color: #ac81fe;
                     }
                     .button {
-                        margin-right: 15px;
+                        margin-right: 10px !important;
                     }
                     .button-aligner {
                         margin-top: 15px;
@@ -303,6 +433,9 @@ export default class Index extends React.Component {
                     }
                     .normal {
                         font-weight: normal;
+                    }
+                    body {
+                        margin-bottom: 4em;
                     }
                 `}</style>
             </div>

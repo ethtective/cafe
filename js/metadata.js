@@ -5,6 +5,7 @@ import abi from "../abi/metadata.json";
 import IPFS from "ipfs-mini";
 
 const network = "mainnet";
+const _contractAddress = "0x981e983f7ea0486195bce0a0460ba23e572d87ec";
 
 let reader = {};
 const eth = new Eth(new Eth.HttpProvider(`https://${network}.infura.io`));
@@ -51,28 +52,19 @@ const ipfs = new IPFS({
 
 export default class MetaDataContract {
     constructor() {
-        this.contract_address = "0x981e983f7ea0486195bce0a0460ba23e572d87ec";
-        this.contract = eth.contract(abi).at(this.contract_address);
-        this.contractView = ethRead.contract(abi).at(this.contract_address);
-        let event = this.contractView.Submission();
-        event.new({ toBlock: "latest" }, (error, result) => {
-            // result null <BigNumber ...> filterId
-            console.log(result);
-        });
-        event.watch((error, result) => {
-            // result null ['0xfd234829...', '0xsf2030d1...']
-            console.log(result);
-        });
+        this.contractAddress = "0x981e983f7ea0486195bce0a0460ba23e572d87ec";
+        this.contract = eth.contract(abi).at(this.contractAddress);
+        this.contractView = ethRead.contract(abi).at(this.contractAddress);
         this.price = 0;
-        this.eth = eth;
+    }
+
+    getMetamask() {
         reader = new FileReader();
         if (
             typeof window.web3 !== "undefined" &&
             typeof window.web3.currentProvider !== "undefined"
-        ) {
+        )
             eth.setProvider(window.web3.currentProvider);
-            // console.log("metamask!");
-        }
     }
 
     async getNetwork() {
@@ -88,12 +80,9 @@ export default class MetaDataContract {
         });
     }
 
-    async getTokenBalance() {
-        return this.contractView
-            .balanceOf(web3.eth.accounts[0])
-            .then(response => {
-                return Eth.fromWei(response[0], "wei");
-            });
+    isValidAddress(address) {
+        if (address && address.length == 42)
+            return eip55.verify(eip55.encode(address));
     }
 
     async getAddressData(address) {
@@ -118,7 +107,8 @@ export default class MetaDataContract {
     }
 
     getEmptyObject() {
-        return json;
+        let newObj = Object.assign(json, {});
+        return newObj;
     }
 
     async storeMetadata(address, data) {
@@ -175,6 +165,7 @@ export default class MetaDataContract {
     }
 
     async lookUp(address) {
+        if (address);
         return new Promise((resolve, reject) => {
             ipfs.catJSON(address, (err, result) => {
                 if (err) reject(err);
