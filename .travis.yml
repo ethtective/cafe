@@ -3,7 +3,6 @@ node_js:
   - 10.1
 install:
   - yarn
-  - npm
 cache:
   directories:
     - "node_modules" # This will tell Travis CI to cache the dependencies
