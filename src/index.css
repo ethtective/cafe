@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: #fafafa;
+}
+
+.json-pretty {
+    line-height: 1.75;
+    color: #66d9ef;
+}
+.json-pretty .json-key {
+    color: #aaa;
+    font-weight: lighter;
+}
+.json-pretty .json-value {
+    color: #3b4252;
+}
+.json-pretty .json-string {
+    color: #434c5e;
+}
+.json-pretty .json-boolean {
+    color: #ac81fe;
+}
+.button {
+    margin-right: 10px !important;
+}
+.button-aligner {
+    margin-top: 15px;
+    float: right;
+}
+.top-padding {
+    margin-top: 3px;
+}
+.monofont input {
+    font-family: monospace;
+    font-size: 120%;
+}
+.normal {
+    font-weight: normal;
+}
+
+img {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    left: 10%;
+    position: relative;
+}
+
+.App {
+    margin-bottom: 4em;
+}

@@ -1,6 +1,8 @@
+import React from "react";
 import Lucky from "../js/luckylist";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import "../index.css";
 
 let luckyList;
 
@@ -48,12 +50,13 @@ export default class LuckyList extends React.Component {
                     address of your choice that users will discover when they
                     press "I'm Feeling Lucky".
                 </p>
-                <img src="lucky.png" />
+                <img src="lucky.png" alt="Ethtective search" />
 
                 <form noValidate autoComplete="off">
                     <TextField
                         fullWidth
                         error={
+                            this.state.saveLuckyAddress !== "" &&
                             this.state.saveLuckyAddress.length > 0 &&
                             !luckyList.isValidAddress(
                                 this.state.saveLuckyAddress,
@@ -84,25 +87,6 @@ export default class LuckyList extends React.Component {
                         </Button>
                     </div>
                 </form>
-                <style global jsx>{`
-                    .button {
-                        margin-right: 10px !important;
-                    }
-                    .button-aligner {
-                        margin-top: 15px;
-                        float: right;
-                    }
-                    .top-padding {
-                        margin-top: 3px;
-                    }
-                    .monofont input {
-                        font-family: monospace;
-                        font-size: 120%;
-                    }
-                    .normal {
-                        font-weight: normal;
-                    }
-                `}</style>
                 <br />
                 <br />
                 <br />

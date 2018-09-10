@@ -1,11 +1,9 @@
 import Eth from "ethjs";
 import EthFilter from "ethjs-filter";
-import eip55 from "eip55";
 import abi from "../abi/metadata.json";
 import IPFS from "ipfs-mini";
 
 const network = "mainnet";
-const _contractAddress = "0x981e983f7ea0486195bce0a0460ba23e572d87ec";
 
 let reader = {};
 const eth = new Eth(new Eth.HttpProvider(`https://${network}.infura.io`));
@@ -81,29 +79,29 @@ export default class MetaDataContract {
     }
 
     isValidAddress(address) {
-        if (address && address.length == 42)
-            return eip55.verify(eip55.encode(address));
+        if (address && address.length === 42) return Eth.isAddress(address);
     }
 
     async getAddressData(address) {
-        return this.contractView
-            .getByAddress(address)
-            .then(result => {
-                //TODO: check if valid IPFS link
-                // console.log(result);
-                if (result[0] === "0x0000000000000000000000000000000000000000")
-                    throw Error(`No metadata information for ${address}`);
-                return this.lookUp(result[2]).then(ipfs => {
+        return this.contractView.getByAddress(address).then(result => {
+            if (result[0] === "0x0000000000000000000000000000000000000000")
+                return;
+            return this.lookUp(result[2])
+                .then(ipfs => {
                     return {
                         address: result[0],
                         name: result[1],
                         data: ipfs,
                     };
+                })
+                .catch(err => {
+                    return {
+                        address: result[0],
+                        name: result[1],
+                        data: { data: "no data for this address" },
+                    };
                 });
-            })
-            .catch(err => {
-                throw Error(err);
-            });
+        });
     }
 
     getEmptyObject() {
@@ -111,22 +109,22 @@ export default class MetaDataContract {
         return newObj;
     }
 
-    async storeMetadata(address, data) {
+    async storeMetadata(address, _name, data) {
         return new Promise((resolve, reject) => {
             ipfs.addJSON(data, (err, result) => {
                 console.log(`IPFS Hash: ${result}`);
                 if (result === undefined || err)
                     reject(new DOMException("Couldn't add metadata to IPFS"));
                 if (
-                    web3.eth.accounts[0] ===
+                    window.web3.eth.accounts[0] ===
                     "0x09ca59e18c58f25b092a0f2670928f5d0656a331"
                 )
-                    return this.saveByOwner(address, name, result, {
-                        from: web3.eth.accounts[0],
+                    return this.saveByOwner(address, _name, result, {
+                        from: window.web3.eth.accounts[0],
                     });
                 return this.contract
-                    .addAddress(address, name, result, {
-                        from: web3.eth.accounts[0],
+                    .addAddress(address, _name, result, {
+                        from: window.web3.eth.accounts[0],
                         value: this.price,
                     })
                     .then(result => {
@@ -139,10 +137,10 @@ export default class MetaDataContract {
         });
     }
 
-    async saveByOwner(address, name, result) {
+    async saveByOwner(address, _name, result) {
         return this.contract
-            .addByOwner(address, name, result, {
-                from: web3.eth.accounts[0],
+            .addByOwner(address, _name, result, {
+                from: window.web3.eth.accounts[0],
             })
             .then(result => {
                 return result;

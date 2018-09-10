@@ -1,42 +1,21 @@
+import React from "react";
 import metadata from "../js/metadata.js";
 import LuckyList from "./luckylist";
-import Head from "next/head";
-import { TypographyStyle, GoogleFont } from "react-typography";
-import Typography from "typography";
-import githubTheme from "typography-theme-github";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import FormGroup from "@material-ui/core/FormGroup";
-import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import MagicDropzone from "react-magic-dropzone";
 import JSONPretty from "react-json-pretty";
 
-githubTheme.headerFontFamily = ["Roboto", "sans-serif"];
-githubTheme.bodyFontFamily = ["Roboto", "sans-serif"];
-githubTheme.headerWeight = 300;
-githubTheme.bodyWeight = 300;
-
-githubTheme.overrideThemeStyles = ({ rhythm }, options) => ({
-    "h1,h2,h3,h4": {
-        fontFamily: ["Roboto", "sans-serif"].join(","),
-        fontWeight: 300,
-    },
-    body: {
-        fontFamily: ["Source Sans Pro", "sans-serif"].join(","),
-        fontWeight: 300,
-    },
-});
-
-const typography = new Typography(githubTheme);
 let metaData = {};
 
 export default class Index extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            address: "",
+            address: this.props.address,
             metadata: { address: "", name: "", image: "" },
             price: 0,
             network: 3,
@@ -50,22 +29,18 @@ export default class Index extends React.Component {
         };
     }
 
-    static getInitialProps({ query: { address, editMode } }) {
-        return { address: address, editMode: editMode };
-    }
-
     componentWillMount() {
         metaData = new metadata();
         metaData.getPrice().then(result => {
             // console.log(result);
             this.setState({ price: result });
         });
-
-        if (this.props.address) {
-            this.setState({ address: this.props.address });
-            this.viewAddress(this.props.address);
-            this.editAddress(this.props.address).catch(err => {
-                this.setState({ saveAddress: this.props.address });
+        if (this.props.params && this.props.params.address) {
+            let match = this.props.params.address;
+            this.setState({ address: match });
+            this.viewAddress(match);
+            this.editAddress(match).catch(err => {
+                this.setState({ saveAddress: match });
             });
         } else {
             this.setState({ address: metaData.contractAddress });
@@ -88,43 +63,52 @@ export default class Index extends React.Component {
     };
 
     viewAddress = address => {
-        metaData
-            .getAddressData(address)
-            .then(contractdata => {
-                // console.log(contractdata);
-                this.setState({ address: address });
-                if (contractdata.data.metadata.logo) {
-                    let image = contractdata.data.metadata.logo;
-                    this.setState({ logo: image });
-                } else {
-                    this.setState({ logo: "" });
-                }
-                this.setState({ metadata: contractdata });
-            })
-            .catch(err => {
-                throw Error(err);
-            });
-    };
-
-    editAddress = address => {
-        return metaData.getAddressData(address).then(contractdata => {
+        metaData.getAddressData(address).then(contractdata => {
             // console.log(contractdata);
+            this.setState({ address: address });
+            if (
+                !contractdata ||
+                !contractdata.data ||
+                !contractdata.data.metadata
+            )
+                return;
             if (contractdata.data.metadata.logo) {
                 let image = contractdata.data.metadata.logo;
-                this.setState({ logo: image, saveFile: image });
+                this.setState({ logo: image });
+            } else {
+                this.setState({ logo: "" });
             }
-            this.setState({
-                saveName: contractdata.data.metadata.name,
-                saveUrl: contractdata.data.metadata.url,
-                saveDescription: contractdata.data.metadata.description,
-                saveAddress: contractdata.address,
-                saveScam:
-                    contractdata.data.metadata.reputation.category === "Scam",
-            });
-            this.forceUpdate();
             this.setState({ metadata: contractdata });
         });
     };
+
+    editAddress = address => {
+        this.setState({ saveAddress: address });
+        if (this.state.metadata && this.state.metadata.address === address) {
+            return this.populateEditor(this.state.metadata);
+        }
+        return metaData.getAddressData(address).then(contractdata => {
+            // console.log(contractdata);
+            this.populateEditor(contractdata);
+        });
+    };
+
+    populateEditor(contractdata) {
+        if (!contractdata.data || !contractdata.data.metadata) return;
+        if (contractdata.data.metadata.logo) {
+            let image = contractdata.data.metadata.logo;
+            this.setState({ logo: image, saveFile: image });
+        }
+        this.setState({
+            saveName: contractdata.data.metadata.name,
+            saveUrl: contractdata.data.metadata.url,
+            saveDescription: contractdata.data.metadata.description,
+            saveAddress: contractdata.address,
+            saveScam: contractdata.data.metadata.reputation.category === "Scam",
+        });
+        this.forceUpdate();
+        this.setState({ metadata: contractdata });
+    }
 
     ethtective = () => {
         window.open(
@@ -154,9 +138,19 @@ export default class Index extends React.Component {
             data.metadata.logo = this.state.saveFile;
         }
         console.log(data);
-        metaData.storeMetadata(data.address, data).then(response => {
-            this.setState({ address: this.state.saveAddress });
-        });
+        metaData
+            .storeMetadata(data.address, this.state.saveName, data)
+            .then(response => {
+                this.setState({ address: this.state.saveAddress });
+            });
+    };
+
+    onViewAddress = e => {
+        this.viewAddress(this.state.address);
+    };
+
+    onEditAddress = e => {
+        this.editAddress(this.state.address);
     };
 
     formatData = data => {};
@@ -183,8 +177,8 @@ export default class Index extends React.Component {
                 style={{
                     width: 64,
                     height: 64,
-                    float: "left",
-                    marginTop: 15,
+                    position: "relative",
+                    left: 0,
                 }}
             />
         ) : this.state.saveFile ? (
@@ -193,8 +187,8 @@ export default class Index extends React.Component {
                 style={{
                     width: 64,
                     height: 64,
-                    float: "left",
-                    marginTop: 15,
+                    position: "relative",
+                    left: 0,
                 }}
             />
         ) : (
@@ -215,12 +209,7 @@ export default class Index extends React.Component {
                     saveAddress: "",
                 }}
             >
-                <Head>
-                    <TypographyStyle typography={typography} />
-                    <GoogleFont typography={typography} />
-                    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-                </Head>
-                {!this.props.editMode ? <LuckyList /> : ""}
+                {!this.props.params.address ? <LuckyList /> : ""}
                 <h1>Metadata Uploader</h1>
                 <p style={{ fontSize: "90%" }}>
                     <span>
@@ -329,7 +318,7 @@ export default class Index extends React.Component {
                     fullWidth
                     required
                     error={
-                        this.state.address &&
+                        this.state.address !== "" &&
                         !metaData.isValidAddress(this.state.address) &&
                         this.state.address.length > 0
                     }
@@ -337,12 +326,22 @@ export default class Index extends React.Component {
                     onChange={this.onInputChange}
                     className="top-padding monofont"
                 />
+                <img
+                    src={this.state.logo}
+                    style={{
+                        width: 64,
+                        height: 64,
+                        position: "relative",
+                        left: 0,
+                        marginTop: 15,
+                    }}
+                />
                 <div className="button-aligner">
                     <Button
                         disabled={!metaData.isValidAddress(this.state.address)}
                         size="small"
                         variant="contained"
-                        onClick={this.editAddress}
+                        onClick={this.onEditAddress}
                         className={"button"}
                     >
                         Edit
@@ -351,7 +350,7 @@ export default class Index extends React.Component {
                         disabled={!metaData.isValidAddress(this.state.address)}
                         size="small"
                         variant="contained"
-                        onClick={this.viewAddress}
+                        onClick={this.onViewAddress}
                         className={"button"}
                     >
                         View
@@ -367,15 +366,7 @@ export default class Index extends React.Component {
                 </div>
                 <br />
                 <br />
-                <img
-                    src={this.state.logo}
-                    style={{
-                        width: 64,
-                        height: 64,
-                    }}
-                />
                 <JSONPretty json={JSON.stringify(this.state.metadata.data)} />
-                <br />
                 <br />
                 <br />
                 <h1>Further Reading</h1>
@@ -399,45 +390,6 @@ export default class Index extends React.Component {
                     registered, JSON can be retrieved by looking up the IPFS
                     address.
                 </p>
-                <style global jsx>{`
-                    .json-pretty {
-                        line-height: 1.75;
-                        color: #66d9ef;
-                    }
-                    .json-pretty .json-key {
-                        color: #aaa;
-                        font-weight: lighter;
-                    }
-                    .json-pretty .json-value {
-                        color: #3b4252;
-                    }
-                    .json-pretty .json-string {
-                        color: #434c5e;
-                    }
-                    .json-pretty .json-boolean {
-                        color: #ac81fe;
-                    }
-                    .button {
-                        margin-right: 10px !important;
-                    }
-                    .button-aligner {
-                        margin-top: 15px;
-                        float: right;
-                    }
-                    .top-padding {
-                        margin-top: 3px;
-                    }
-                    .monofont input {
-                        font-family: monospace;
-                        font-size: 120%;
-                    }
-                    .normal {
-                        font-weight: normal;
-                    }
-                    body {
-                        margin-bottom: 4em;
-                    }
-                `}</style>
             </div>
         );
     }

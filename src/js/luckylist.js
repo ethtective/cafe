@@ -1,5 +1,4 @@
 import Eth from "ethjs";
-import eip55 from "eip55";
 import abi from "../abi/luckylist.json";
 const eth = new Eth(new Eth.HttpProvider("https://mainnet.infura.io"));
 
@@ -12,8 +11,7 @@ export default class LuckyList {
     }
 
     isValidAddress(address) {
-        if (address && address.length == 42)
-            return eip55.verify(eip55.encode(address));
+        if (address && address.length === 42) return Eth.isAddress(address);
     }
 
     async getRandom() {
@@ -54,7 +52,7 @@ export default class LuckyList {
     async addLucky(address) {
         return this.contract
             .addAddress(address, {
-                from: web3.eth.accounts[0],
+                from: window.web3.eth.accounts[0],
                 value: this.price,
             })
             .then(result => {
@@ -74,7 +72,7 @@ export default class LuckyList {
             ) {
                 eth.setProvider(window.web3.currentProvider);
                 // console.log(web3.eth.accounts);
-                resolve(web3.eth.accounts[0]);
+                resolve(window.web3.eth.accounts[0]);
             } else {
                 reject();
             }

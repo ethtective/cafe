@@ -1,1 +1,0 @@
-module.exports=__NEXT_REGISTER_PAGE("/luckylist",function(){return{page:webpackJsonp([3],{510:function(e,t,n){e.exports=n(187)}},[510]).default}});

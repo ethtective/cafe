@@ -1,37 +1,37 @@
 {
-    "name": "cafe.ethtective",
-    "version": "1.0.0",
-    "description": "Metadata Uploader for Ethtective.com",
-    "scripts": {
-        "dev": "node server.js",
-        "build": "next build",
-        "export": "next export",
-        "deploy":
-            "next build && next export && now -n cafe.ethtective && now alias",
-        "start": "NODE_ENV=production node server.js"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "@material-ui/core": "^3.0.1",
-        "@material-ui/icons": "^3.0.1",
-        "@zeit/next-css": "^0.2.0",
-        "eip55": "^1.0.3",
-        "ethjs": "^0.4.0",
-        "express": "^4.14.0",
-        "ipfs-mini": "^1.1.2",
-        "next": "latest",
-        "react": "^16.4.2",
-        "react-dom": "^16.4.2",
-        "react-json-pretty": "^1.7.9",
-        "react-magic-dropzone": "^1.0.1",
-        "react-router-dom": "^4.3.1",
-        "react-syntax-highlighter": "^8.0.1",
-        "react-typography": "^0.16.13",
-        "typography": "^0.16.17",
-        "typography-theme-github": "^0.15.10"
-    },
-    "bugs": {
-        "url": "https://github.com/ethtective/ethtective.com/issues"
-    }
+  "name": "cafe.ethtective",
+  "version": "1.0.0",
+  "description": "Donation platform for Ethtective.com",
+  "dependencies": {
+    "@material-ui/core": "^3.0.1",
+    "@material-ui/icons": "^3.0.1",
+    "@zeit/next-css": "^0.2.0",
+    "eip55": "^1.0.3",
+    "ethjs": "^0.4.0",
+    "express": "^4.14.0",
+    "ipfs-mini": "^1.1.2",
+    "next": "latest",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
+    "react-ga": "^2.5.3",
+    "react-json-pretty": "^1.7.9",
+    "react-magic-dropzone": "^1.0.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.5",
+    "react-syntax-highlighter": "^8.0.1",
+    "react-typography": "^0.16.13",
+    "typography": "^0.16.17",
+    "typography-theme-github": "^0.15.10"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "deploy": "npm run build && now -n cafe.ethtective && now alias"
+  },
+  "author": "Alexander Mangel",
+  "license": "LGPL",
+  "bugs": {
+    "url": "https://github.com/ethtective/ethtective.com/issues"
+  }
 }
