@@ -443,7 +443,7 @@ export default class Index extends React.Component {
                 <br />
                 <h1>Further Reading</h1>
                 <p>
-                    <span role="img" aria-label="detective">
+                    <span role="img" aria-label="ethtective">
                         🕵️
                     </span>{" "}
                     Mainnet Metadata Prototype Contract:{" "}
