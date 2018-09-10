@@ -1,5 +1,4 @@
 import Eth from "ethjs";
-import EthFilter from "ethjs-filter";
 import abi from "../abi/metadata.json";
 import IPFS from "ipfs-mini";
 
@@ -8,7 +7,6 @@ const network = "mainnet";
 let reader = {};
 const eth = new Eth(new Eth.HttpProvider(`https://${network}.infura.io`));
 const ethRead = new Eth(new Eth.HttpProvider(`https://${network}.infura.io`));
-const filters = new EthFilter(ethRead);
 
 const json = {
     version: "0.2",
@@ -30,6 +28,10 @@ const json = {
             swarm_source: "",
             interfaces: [],
             erc: [],
+        },
+        token: {
+            ticker: "",
+            decimals: 18,
         },
         reputation: {
             verified: [],

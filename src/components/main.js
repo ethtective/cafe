@@ -8,6 +8,9 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import MagicDropzone from "react-magic-dropzone";
 import JSONPretty from "react-json-pretty";
+// import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+// import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+// import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 
 let metaData = {};
 
@@ -26,6 +29,10 @@ export default class Index extends React.Component {
             saveAddress: "",
             saveScam: false,
             saveImageData: "",
+            saveSymbol: "",
+            saveDecimals: 18,
+            saveInterfaces: [],
+            isToken: false,
         };
     }
 
@@ -51,7 +58,7 @@ export default class Index extends React.Component {
     componentDidMount() {
         metaData.getMetamask();
         metaData.getNetwork().then(result => {
-            this.setState({ network: parseInt(result) });
+            this.setState({ network: parseInt(result, 10) });
         });
     }
 
@@ -95,16 +102,25 @@ export default class Index extends React.Component {
 
     populateEditor(contractdata) {
         if (!contractdata.data || !contractdata.data.metadata) return;
-        if (contractdata.data.metadata.logo) {
-            let image = contractdata.data.metadata.logo;
+        let md = contractdata.data.metadata;
+        if (md.logo) {
+            let image = md.logo;
             this.setState({ logo: image, saveFile: image });
         }
+        if (md.token.ticker.length > 0) {
+            this.setState({
+                isToken: true,
+                saveSymbol: md.token.ticker,
+                saveDecimals: md.token.decimals,
+                saveInterfaces: md.contract.interfaces,
+            });
+        }
         this.setState({
-            saveName: contractdata.data.metadata.name,
-            saveUrl: contractdata.data.metadata.url,
-            saveDescription: contractdata.data.metadata.description,
+            saveName: md.name,
+            saveUrl: md.url,
+            saveDescription: md.description,
             saveAddress: contractdata.address,
-            saveScam: contractdata.data.metadata.reputation.category === "Scam",
+            saveScam: md.reputation.category === "Scam",
         });
         this.forceUpdate();
         this.setState({ metadata: contractdata });
@@ -129,6 +145,13 @@ export default class Index extends React.Component {
             // console.log("WHY");
             data.metadata.reputation.status = "Blocked";
             data.metadata.reputation.category = "Scam";
+        }
+        if (this.state.isToken === true) {
+            // console.log("WHY");
+            let interfaces = this.state.saveInterfaces.split(",").map(Number);
+            data.metadata.contract.interfaces = interfaces;
+            data.metadata.token.ticker = this.state.saveSymbol;
+            data.metadata.token.decimals = this.state.saveDecimals;
         }
         if (this.state.file)
             data.metadata.logo = await metaData.convertBlobToBase64(
@@ -180,6 +203,7 @@ export default class Index extends React.Component {
                     position: "relative",
                     left: 0,
                 }}
+                alt="Uploaded logo"
             />
         ) : this.state.saveFile ? (
             <img
@@ -190,6 +214,7 @@ export default class Index extends React.Component {
                     position: "relative",
                     left: 0,
                 }}
+                alt="Uploaded logo"
             />
         ) : (
             ""
@@ -213,9 +238,14 @@ export default class Index extends React.Component {
                 <h1>Metadata Uploader</h1>
                 <p style={{ fontSize: "90%" }}>
                     <span>
-                        <b style={{ color: "#00ffd9" }}>⚠️ Warning:</b> this is
-                        a prototype registry contract, data may be lost (but
-                        still counts as a donation!)
+                        <b style={{ color: "#00ffd9" }}>
+                            <span role="img" aria-label="warning">
+                                ⚠️
+                            </span>{" "}
+                            Warning:
+                        </b>{" "}
+                        this is a prototype registry contract, data may be lost
+                        (but still counts as a donation!)
                     </span>
                 </p>
                 <form noValidate autoComplete="off">
@@ -260,11 +290,52 @@ export default class Index extends React.Component {
                         <FormControlLabel
                             control={
                                 <Checkbox
+                                    checked={this.state.isToken}
+                                    onChange={this.handleSaveCheck("isToken")}
+                                    color="primary"
+                                />
+                            }
+                            label="Is this a Token?"
+                        />
+                    </FormGroup>
+                    <div
+                        className={
+                            (this.state.isToken ? "expanded " : "") +
+                            "formExpanded"
+                        }
+                    >
+                        <FormGroup row>
+                            <TextField
+                                label="Token Ticker Symbol"
+                                value={this.state.saveSymbol}
+                                onChange={this.handleSaveChange("saveSymbol")}
+                                style={{ width: "49%", marginRight: "2%" }}
+                            />
+                            <TextField
+                                label="Decimals"
+                                value={this.state.saveDecimals}
+                                onChange={this.handleSaveChange("saveDecimals")}
+                                style={{ width: "49%" }}
+                            />
+                        </FormGroup>
+                        <TextField
+                            label="Supported Interfaces"
+                            value={this.state.saveInterfaces}
+                            placeholder="20, 721, 165"
+                            onChange={this.handleSaveChange("saveInterfaces")}
+                            fullWidth
+                            helperText="Interfaces supported by this Token separated by comma"
+                        />
+                    </div>
+                    <FormGroup row>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
                                     checked={this.state.saveScam}
                                     onChange={this.handleSaveCheck("saveScam")}
                                 />
                             }
-                            label="Mark as scam"
+                            label="Report as scam"
                         />
                     </FormGroup>
                     {preview}
@@ -304,7 +375,7 @@ export default class Index extends React.Component {
                         >
                             Save To Ethereum
                         </Button>
-                        <Button variant="outlined" disabled>
+                        <Button variant="outlined" disabled size="small">
                             {this.state.price} Ξ
                         </Button>
                     </div>
@@ -335,6 +406,7 @@ export default class Index extends React.Component {
                         left: 0,
                         marginTop: 15,
                     }}
+                    alt="Uploaded logo"
                 />
                 <div className="button-aligner">
                     <Button
@@ -371,7 +443,10 @@ export default class Index extends React.Component {
                 <br />
                 <h1>Further Reading</h1>
                 <p>
-                    🕵️ Mainnet Metadata Prototype Contract:{" "}
+                    <span role="img" aria-label="detective">
+                        🕵️
+                    </span>{" "}
+                    Mainnet Metadata Prototype Contract:{" "}
                     <a
                         href={
                             "http://canary.ethtective.com/" +
@@ -383,9 +458,12 @@ export default class Index extends React.Component {
                     </a>
                 </p>
                 <p>
-                    ℹ️ The metadata stored into this contract is freely
-                    available by calling <code>.getByAddress(address)</code> on
-                    the contract. This function returns a tuple{" "}
+                    <span role="img" aria-label="info">
+                        ℹ️
+                    </span>{" "}
+                    The metadata stored into this contract is freely available
+                    by calling <code>.getByAddress(address)</code> on the
+                    contract. This function returns a tuple{" "}
                     <code>(address, name, ipfs)</code>. If Metadata has been
                     registered, JSON can be retrieved by looking up the IPFS
                     address.

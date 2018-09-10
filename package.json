@@ -23,15 +23,24 @@
     "typography": "^0.16.17",
     "typography-theme-github": "^0.15.10"
   },
+  "devDependencies": {
+    "prettier": "^1.14.2"
+  },
+  "engines": {
+    "node": "10.1.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "deploy": "npm run build && now -n cafe.ethtective && now alias"
+    "deploy":
+      "npm run build && now ./build -e NODE_ENV='production' -e PUBLIC_URL='http://canary.ethtective.com' --dotenv -n cafe.ethtective && now alias"
   },
   "author": "Alexander Mangel",
-  "license": "LGPL",
+  "keywords": ["Ethereum", "Blockchain", "Transaction", "Visualizer"],
+  "license": "GNU LGPLv3",
   "bugs": {
-    "url": "https://github.com/ethtective/ethtective.com/issues"
-  }
+    "url": "https://github.com/ethtective/cafe/issues"
+  },
+  "homepage": "https://cafe.ethtective.com"
 }

@@ -1,0 +1,7 @@
+{
+    "type": "static",
+    "static": {
+        "public": "build"
+    },
+    "alias": "cafe.ethtective.com"
+}

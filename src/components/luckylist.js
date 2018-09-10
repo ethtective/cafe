@@ -44,8 +44,11 @@ export default class LuckyList extends React.Component {
             <div>
                 <h1>Lucky List</h1>
                 <p>
-                    🎊 Have you always wanted to be part of a select lucky few?
-                    Now is your chance for a mere {this.state.price} Eth! The
+                    <span role="img" aria-label="cheer">
+                        🎊
+                    </span>{" "}
+                    Have you always wanted to be part of a select lucky few? Now
+                    is your chance for a mere {this.state.price} Eth! The
                     Ξthtective Lucky List is open for submissions! Add an
                     address of your choice that users will discover when they
                     press "I'm Feeling Lucky".
@@ -82,7 +85,7 @@ export default class LuckyList extends React.Component {
                         >
                             Add to Lucky List
                         </Button>
-                        <Button variant="outlined" disabled>
+                        <Button variant="outlined" disabled size="small">
                             {this.state.price} Ξ
                         </Button>
                     </div>

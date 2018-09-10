@@ -9,33 +9,42 @@ body {
     line-height: 1.75;
     color: #66d9ef;
 }
+
 .json-pretty .json-key {
     color: #aaa;
     font-weight: lighter;
 }
+
 .json-pretty .json-value {
     color: #3b4252;
 }
+
 .json-pretty .json-string {
     color: #434c5e;
 }
+
 .json-pretty .json-boolean {
     color: #ac81fe;
 }
+
 .button {
     margin-right: 10px !important;
 }
+
 .button-aligner {
     margin-top: 15px;
     float: right;
 }
+
 .top-padding {
-    margin-top: 3px;
+    margin-top: 10px !important;
 }
+
 .monofont input {
     font-family: monospace;
     font-size: 120%;
 }
+
 .normal {
     font-weight: normal;
 }
@@ -50,4 +59,17 @@ img {
 
 .App {
     margin-bottom: 4em;
+}
+
+.formExpanded {
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.6s ease, margin-bottom 0.6s ease;
+    margin-bottom: 0px;
+}
+
+.formExpanded.expanded {
+    max-height: 200px;
+    transition: max-height 0.6s ease, margin-bottom 0.6s ease;
+    margin-bottom: 25px;
 }
