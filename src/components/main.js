@@ -71,7 +71,6 @@ export default class Index extends React.Component {
 
     viewAddress = address => {
         metaData.getAddressData(address).then(contractdata => {
-            // console.log(contractdata);
             this.setState({ address: address });
             if (
                 !contractdata ||
