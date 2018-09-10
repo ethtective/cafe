@@ -5,3 +5,8 @@ install:
   - yarn
 script:
   - npm run build
+deploy:
+  provider: script
+  script: npm run deploy
+  on:
+    branch: master
