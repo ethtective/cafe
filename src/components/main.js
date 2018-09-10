@@ -72,7 +72,7 @@ export default class Index extends React.Component {
 
     viewAddress = address => {
         metaData.getAddressData(address).then(contractdata => {
-            // console.log(contractdata);
+            // hope is a great thing
             this.setState({ address: address });
             if (
                 !contractdata ||
@@ -236,7 +236,7 @@ export default class Index extends React.Component {
                 }}
             >
                 {!this.props.params.address ? <LuckyList /> : ""}
-                <h1>Metadata Uploader</h1>
+                <h1>Metadata Editor</h1>
                 <p style={{ fontSize: "90%" }}>
                     <span>
                         <b style={{ color: "#00ffd9" }}>
@@ -501,10 +501,10 @@ export default class Index extends React.Component {
                 <br />
                 <h1>Further Reading</h1>
                 <p>
-                    <span role="img" aria-label="detective">
+                    <span role="img" aria-label="ethtective">
                         🕵️
                     </span>{" "}
-                    Mainnet Metadata Prototype Contract:{" "}
+                    Mainnet Metadata Prototype Contract:
                     <a
                         href={
                             "http://canary.ethtective.com/" +

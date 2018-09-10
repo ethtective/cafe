@@ -3,5 +3,6 @@
     "static": {
         "public": "build"
     },
+    "name": "cafe.ethtective",
     "alias": "cafe.ethtective.com"
 }
