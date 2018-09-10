@@ -235,7 +235,7 @@ export default class Index extends React.Component {
                 }}
             >
                 {!this.props.params.address ? <LuckyList /> : ""}
-                <h1>Metadata Uploader</h1>
+                <h1>Metadata Editor</h1>
                 <p style={{ fontSize: "90%" }}>
                     <span>
                         <b style={{ color: "#00ffd9" }}>
