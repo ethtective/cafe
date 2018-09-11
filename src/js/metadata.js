@@ -5,10 +5,18 @@ import IPFS from "ipfs-mini";
 const network = "mainnet";
 
 let reader = {};
-const eth = new Eth(new Eth.HttpProvider(`https://${network}.infura.io`));
-const ethRead = new Eth(new Eth.HttpProvider(`https://${network}.infura.io`));
+const eth = new Eth(
+    new Eth.HttpProvider(
+        `https://${network}.infura.io/v3/${process.env.REACT_APP_INFURA_API}`,
+    ),
+);
+const ethRead = new Eth(
+    new Eth.HttpProvider(
+        `https://${network}.infura.io/v3/${process.env.REACT_APP_INFURA_API}`,
+    ),
+);
 
-const json = {
+let json = {
     version: "0.2",
     address: "",
     submission: {
@@ -24,7 +32,9 @@ const json = {
         contract: {
             abi: "",
             source: "",
-            compiler_version: "",
+            compiler_version: "", //0.4.24+commit.e67f0147
+            language: "", //Solidity
+            optimizer: -1, //200
             swarm_source: "",
             interfaces: [],
             erc: [],
@@ -93,7 +103,7 @@ export default class MetaDataContract {
                     return {
                         address: result[0],
                         name: result[1],
-                        data: ipfs,
+                        data: JSON.parse(JSON.stringify(ipfs)),
                     };
                 })
                 .catch(err => {
@@ -107,7 +117,7 @@ export default class MetaDataContract {
     }
 
     getEmptyObject() {
-        let newObj = Object.assign(json, {});
+        let newObj = JSON.parse(JSON.stringify(json));
         return newObj;
     }
 

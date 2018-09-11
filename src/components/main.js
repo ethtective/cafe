@@ -46,7 +46,6 @@ export default class Index extends React.Component {
         if (this.props.params && this.props.params.address) {
             let match = this.props.params.address;
             this.setState({ address: match });
-            this.viewAddress(match);
             this.editAddress(match).catch(err => {
                 this.setState({ saveAddress: match });
             });
@@ -73,20 +72,7 @@ export default class Index extends React.Component {
     viewAddress = address => {
         metaData.getAddressData(address).then(contractdata => {
             // hope is a great thing
-            this.setState({ address: address });
-            if (
-                !contractdata ||
-                !contractdata.data ||
-                !contractdata.data.metadata
-            )
-                return;
-            if (contractdata.data.metadata.logo) {
-                let image = contractdata.data.metadata.logo;
-                this.setState({ logo: image });
-            } else {
-                this.setState({ logo: "" });
-            }
-            this.setState({ metadata: contractdata });
+            this.populateViewer(address, contractdata);
         });
     };
 
@@ -101,14 +87,33 @@ export default class Index extends React.Component {
         });
     };
 
+    populateViewer(address, contractdata) {
+        this.setState({ address: address });
+        if (!contractdata || !contractdata.data || !contractdata.data.metadata)
+            return;
+        if (contractdata.data.metadata.logo) {
+            let image = contractdata.data.metadata.logo;
+            this.setState({ logo: image });
+        } else {
+            this.setState({ logo: "" });
+        }
+        this.setState({ metadata: contractdata });
+    }
+
     populateEditor(contractdata) {
         if (!contractdata.data || !contractdata.data.metadata) return;
-        let md = contractdata.data.metadata;
+        this.populateViewer(contractdata.address, contractdata);
+        let empty = metaData.getEmptyObject();
+        console.log(empty, contractdata.data);
+        Object.assign(empty, contractdata.data); //adding empty fields from previous versions
+        let cd = empty;
+        let md = cd.metadata;
+        console.log(cd);
         if (md.logo) {
             let image = md.logo;
             this.setState({ logo: image, saveFile: image });
         }
-        if (md.token.ticker.length > 0) {
+        if (md.token && md.token.ticker && md.token.ticker.length > 0) {
             this.setState({
                 isToken: true,
                 saveSymbol: md.token.ticker,
