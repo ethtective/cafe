@@ -1,6 +1,10 @@
 import Eth from "ethjs";
 import abi from "../abi/luckylist.json";
-const eth = new Eth(new Eth.HttpProvider("https://mainnet.infura.io"));
+const eth = new Eth(
+    new Eth.HttpProvider(
+        `https://mainnet.infura.io/v3/${process.env.REACT_APP_INFURA_API}`,
+    ),
+);
 
 export default class LuckyList {
     constructor() {

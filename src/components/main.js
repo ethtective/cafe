@@ -33,6 +33,7 @@ export default class Index extends React.Component {
             saveDecimals: 18,
             saveInterfaces: [],
             isToken: false,
+            isContract: false,
         };
     }
 
@@ -45,7 +46,6 @@ export default class Index extends React.Component {
         if (this.props.params && this.props.params.address) {
             let match = this.props.params.address;
             this.setState({ address: match });
-            this.viewAddress(match);
             this.editAddress(match).catch(err => {
                 this.setState({ saveAddress: match });
             });
@@ -72,20 +72,7 @@ export default class Index extends React.Component {
     viewAddress = address => {
         metaData.getAddressData(address).then(contractdata => {
             // hope is a great thing
-            this.setState({ address: address });
-            if (
-                !contractdata ||
-                !contractdata.data ||
-                !contractdata.data.metadata
-            )
-                return;
-            if (contractdata.data.metadata.logo) {
-                let image = contractdata.data.metadata.logo;
-                this.setState({ logo: image });
-            } else {
-                this.setState({ logo: "" });
-            }
-            this.setState({ metadata: contractdata });
+            this.populateViewer(address, contractdata);
         });
     };
 
@@ -100,14 +87,33 @@ export default class Index extends React.Component {
         });
     };
 
+    populateViewer(address, contractdata) {
+        this.setState({ address: address });
+        if (!contractdata || !contractdata.data || !contractdata.data.metadata)
+            return;
+        if (contractdata.data.metadata.logo) {
+            let image = contractdata.data.metadata.logo;
+            this.setState({ logo: image });
+        } else {
+            this.setState({ logo: "" });
+        }
+        this.setState({ metadata: contractdata });
+    }
+
     populateEditor(contractdata) {
         if (!contractdata.data || !contractdata.data.metadata) return;
-        let md = contractdata.data.metadata;
+        this.populateViewer(contractdata.address, contractdata);
+        let empty = metaData.getEmptyObject();
+        console.log(empty, contractdata.data);
+        Object.assign(empty, contractdata.data); //adding empty fields from previous versions
+        let cd = empty;
+        let md = cd.metadata;
+        console.log(cd);
         if (md.logo) {
             let image = md.logo;
             this.setState({ logo: image, saveFile: image });
         }
-        if (md.token.ticker.length > 0) {
+        if (md.token && md.token.ticker && md.token.ticker.length > 0) {
             this.setState({
                 isToken: true,
                 saveSymbol: md.token.ticker,
@@ -290,6 +296,63 @@ export default class Index extends React.Component {
                         <FormControlLabel
                             control={
                                 <Checkbox
+                                    checked={this.state.isContract}
+                                    onChange={this.handleSaveCheck(
+                                        "isContract",
+                                    )}
+                                    color="primary"
+                                />
+                            }
+                            label="Is this a Contract?"
+                        />
+                    </FormGroup>
+                    <div
+                        className={
+                            (this.state.isContract ? "expanded " : "") +
+                            "formExpanded"
+                        }
+                    >
+                        <FormGroup row>
+                            <TextField
+                                label="Contract ABI"
+                                value={this.state.saveABI}
+                                onChange={this.handleSaveChange("saveABI")}
+                                style={{ width: "49%", marginRight: "2%" }}
+                            />
+                            <TextField
+                                label="Contract Source"
+                                value={this.state.saveSource}
+                                onChange={this.handleSaveChange("saveSource")}
+                                style={{ width: "49%" }}
+                            />
+                        </FormGroup>
+                        <FormGroup row>
+                            <TextField
+                                label="Compiler Version"
+                                value={this.state.saveVersion}
+                                onChange={this.handleSaveChange("saveVersion")}
+                                style={{ width: "49%", marginRight: "2%" }}
+                            />
+                            <TextField
+                                label="Swarm Source"
+                                value={this.state.saveSwarm}
+                                onChange={this.handleSaveChange("saveSwarm")}
+                                style={{ width: "49%" }}
+                            />
+                        </FormGroup>
+                        <TextField
+                            label="Supported Interfaces"
+                            value={this.state.saveInterfaces}
+                            placeholder="20, 721, 165"
+                            onChange={this.handleSaveChange("saveInterfaces")}
+                            fullWidth
+                            helperText="Interfaces supported by this Token separated by comma"
+                        />
+                    </div>
+                    <FormGroup row>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
                                     checked={this.state.isToken}
                                     onChange={this.handleSaveCheck("isToken")}
                                     color="primary"
@@ -324,7 +387,7 @@ export default class Index extends React.Component {
                             placeholder="20, 721, 165"
                             onChange={this.handleSaveChange("saveInterfaces")}
                             fullWidth
-                            helperText="Interfaces supported by this Token separated by comma"
+                            helperText="Interfaces supported by this Contract separated by comma"
                         />
                     </div>
                     <FormGroup row>
