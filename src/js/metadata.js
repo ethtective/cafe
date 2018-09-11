@@ -184,3 +184,17 @@ export default class MetaDataContract {
         });
     }
 }
+
+// for reference, 2 nov new Web3 request as per https://github.com/bitpshr/EIPs/blob/1102-readonly-provider/EIPS/eip-1102.md
+// window.addEventListener('load', async () => {
+//     // Read-only provider is exposed by default
+//     console.log(await ethereum.send('net_version'));
+//     try {
+//         // Request full provider if needed
+//         await ethereum.enable();
+//         // Full provider exposed
+//         await ethereum.send('eth_sendTransaction', [/* ... */]);
+//     } catch (error) {
+//         // User denied full provider access
+//     }
+// });
