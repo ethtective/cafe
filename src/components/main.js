@@ -296,63 +296,6 @@ export default class Index extends React.Component {
                         <FormControlLabel
                             control={
                                 <Checkbox
-                                    checked={this.state.isContract}
-                                    onChange={this.handleSaveCheck(
-                                        "isContract",
-                                    )}
-                                    color="primary"
-                                />
-                            }
-                            label="Is this a Contract?"
-                        />
-                    </FormGroup>
-                    <div
-                        className={
-                            (this.state.isContract ? "expanded " : "") +
-                            "formExpanded"
-                        }
-                    >
-                        <FormGroup row>
-                            <TextField
-                                label="Contract ABI"
-                                value={this.state.saveABI}
-                                onChange={this.handleSaveChange("saveABI")}
-                                style={{ width: "49%", marginRight: "2%" }}
-                            />
-                            <TextField
-                                label="Contract Source"
-                                value={this.state.saveSource}
-                                onChange={this.handleSaveChange("saveSource")}
-                                style={{ width: "49%" }}
-                            />
-                        </FormGroup>
-                        <FormGroup row>
-                            <TextField
-                                label="Compiler Version"
-                                value={this.state.saveVersion}
-                                onChange={this.handleSaveChange("saveVersion")}
-                                style={{ width: "49%", marginRight: "2%" }}
-                            />
-                            <TextField
-                                label="Swarm Source"
-                                value={this.state.saveSwarm}
-                                onChange={this.handleSaveChange("saveSwarm")}
-                                style={{ width: "49%" }}
-                            />
-                        </FormGroup>
-                        <TextField
-                            label="Supported Interfaces"
-                            value={this.state.saveInterfaces}
-                            placeholder="20, 721, 165"
-                            onChange={this.handleSaveChange("saveInterfaces")}
-                            fullWidth
-                            helperText="Interfaces supported by this Token separated by comma"
-                        />
-                    </div>
-                    <FormGroup row>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
                                     checked={this.state.isToken}
                                     onChange={this.handleSaveCheck("isToken")}
                                     color="primary"
