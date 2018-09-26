@@ -30,8 +30,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "deploy":
-      "npm run build && now ./build -e NODE_ENV='production' -e PUBLIC_URL='http://canary.ethtective.com' --dotenv -n cafe.ethtective && now alias"
+    "deploy": "npm run build && now ./build -e NODE_ENV='production' --dotenv -n cafe.ethtective && now alias"
   },
   "author": "Alexander Mangel",
   "keywords": ["Ethereum", "Blockchain", "Transaction", "Visualizer"],
