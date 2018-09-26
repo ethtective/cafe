@@ -5,5 +5,11 @@
     },
     "dotenv": true,
     "name": "cafe.ethtective",
-    "alias": ["cafe.ethtective.com"]
+    "alias": ["cafe.ethtective.com"],
+    "scale": {
+        "bru1": {
+            "min": 1,
+            "max": "auto"
+        }
+    }
 }
