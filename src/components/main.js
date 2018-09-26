@@ -278,7 +278,7 @@ export default class Index extends React.Component {
                     user friendly experience than regular block explorers.
                     Donations are welcome to help the (literally) starving
                     developers of this tool, luckily our users are{" "}
-                    <a href="https://www.ethtective.com/0xfa129dce2215e3f16aa9b1bd31601873206157c5&">
+                    <a href="https://www.ethtective.com/0x09ca59e18c58f25b092a0f2670928f5d0656a331&">
                         famously generous
                     </a>
                 </p>
