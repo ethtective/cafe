@@ -1,8 +1,9 @@
 {
     "type": "static",
     "static": {
-        "public": "/build"
+        "public": "build"
     },
+    "dotenv": true,
     "name": "cafe.ethtective",
     "alias": ["cafe.ethtective.com"]
 }
