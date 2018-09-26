@@ -1,6 +1,6 @@
 {
   "name": "cafe.ethtective",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Donation platform for Ethtective.com",
   "dependencies": {
     "@material-ui/core": "^3.0.1",
