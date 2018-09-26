@@ -21,7 +21,8 @@
     "typography-theme-github": "^0.15.10"
   },
   "devDependencies": {
-    "prettier": "^1.14.2"
+    "prettier": "^1.14.2",
+    "release-it": "^7.4.7"
   },
   "engines": {
     "node": "10.1.0"
@@ -33,7 +34,12 @@
     "deploy": "npm run build && now ./build -e NODE_ENV='production' --dotenv -n cafe.ethtective && now alias"
   },
   "author": "Alexander Mangel",
-  "keywords": ["Ethereum", "Blockchain", "Transaction", "Visualizer"],
+  "keywords": [
+    "Ethereum",
+    "Blockchain",
+    "Transaction",
+    "Visualizer"
+  ],
   "license": "GNU LGPLv3",
   "bugs": {
     "url": "https://github.com/ethtective/cafe/issues"
