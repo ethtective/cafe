@@ -5,3 +5,5 @@
 # Ethtective Cafee
 
 https://cafe.ethtective.com is where we explore ideas that seek the limits of human generosity and probably other things that may help somehow.
+
+P.S> Yes a PR on the header here would be greatly appreciated thank you very much
