@@ -53,12 +53,13 @@ export default class LuckyList extends React.Component {
                     address of your choice that users will discover when they
                     press "I'm Feeling Lucky".
                 </p>
-                <img src="lucky.png" alt="Ethtective search" />
+                <img src="luckygif.gif" alt="Ethtective search" />
 
                 <form noValidate autoComplete="off">
                     <TextField
                         fullWidth
                         error={
+                            this.state.saveLuckyAddress &&
                             this.state.saveLuckyAddress !== "" &&
                             this.state.saveLuckyAddress.length > 0 &&
                             !luckyList.isValidAddress(

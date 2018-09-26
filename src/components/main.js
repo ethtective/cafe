@@ -240,239 +240,57 @@ export default class Index extends React.Component {
                     saveAddress: "",
                 }}
             >
-                {!this.props.params.address ? <LuckyList /> : ""}
-                <h1>Metadata Editor</h1>
-                <p style={{ fontSize: "90%" }}>
-                    <span>
-                        <b style={{ color: "#00ffd9" }}>
-                            <span role="img" aria-label="warning">
-                                ⚠️
-                            </span>{" "}
-                            Warning:
-                        </b>{" "}
-                        this is a prototype registry contract, data may be lost
-                        (but still counts as a donation!)
-                    </span>
-                </p>
-                <form noValidate autoComplete="off">
-                    <TextField
-                        fullWidth
-                        error={
-                            !metaData.isValidAddress(this.state.saveAddress) &&
-                            this.state.saveAddress.length > 0
-                        }
-                        required={true}
-                        label="Address"
-                        value={this.state.saveAddress}
-                        onChange={this.handleSaveChange("saveAddress")}
-                        className="top-padding monofont"
-                    />
-                    <TextField
-                        fullWidth
-                        required={true}
-                        label="Name"
-                        value={this.state.saveName}
-                        onChange={this.handleSaveChange("saveName")}
-                        className="top-padding"
-                    />
-                    <TextField
-                        fullWidth
-                        label="Url"
-                        value={this.state.saveUrl}
-                        onChange={this.handleSaveChange("saveUrl")}
-                        className="top-padding"
-                    />
-                    <TextField
-                        label="Description"
-                        multiline
-                        fullWidth
-                        rowsMax="4"
-                        value={this.state.saveDescription}
-                        onChange={this.handleSaveChange("saveDescription")}
-                        className="top-padding"
-                        margin="normal"
-                    />
-                    <FormGroup row>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={this.state.isToken}
-                                    onChange={this.handleSaveCheck("isToken")}
-                                    color="primary"
-                                />
-                            }
-                            label="Is this a Token?"
-                        />
-                    </FormGroup>
-                    <div
-                        className={
-                            (this.state.isToken ? "expanded " : "") +
-                            "formExpanded"
-                        }
-                    >
-                        <FormGroup row>
-                            <TextField
-                                label="Token Ticker Symbol"
-                                value={this.state.saveSymbol}
-                                onChange={this.handleSaveChange("saveSymbol")}
-                                style={{ width: "49%", marginRight: "2%" }}
-                            />
-                            <TextField
-                                label="Decimals"
-                                value={this.state.saveDecimals}
-                                onChange={this.handleSaveChange("saveDecimals")}
-                                style={{ width: "49%" }}
-                            />
-                        </FormGroup>
-                        <TextField
-                            label="Supported Interfaces"
-                            value={this.state.saveInterfaces}
-                            placeholder="20, 721, 165"
-                            onChange={this.handleSaveChange("saveInterfaces")}
-                            fullWidth
-                            helperText="Interfaces supported by this Contract separated by comma"
-                        />
-                    </div>
-                    <FormGroup row>
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    checked={this.state.saveScam}
-                                    onChange={this.handleSaveCheck("saveScam")}
-                                />
-                            }
-                            label="Report as scam"
-                        />
-                    </FormGroup>
-                    {preview}
-                    <div className="button-aligner">
-                        <label htmlFor="flat-button-file">
-                            <Button
-                                size="small"
-                                component="span"
-                                className={"image_upload button"}
-                            >
-                                <MagicDropzone
-                                    className="Dropzone"
-                                    accept="image/jpeg, image/png, .jpg, .jpeg, .png, .svg"
-                                    onDrop={this.onDrop}
-                                >
-                                    {this.state.file ? "" : ""}
-                                    {this.state.file
-                                        ? "✅ '" +
-                                          this.state.file[0].name +
-                                          "'' uploaded!"
-                                        : "Upload Image"}
-                                </MagicDropzone>
-                            </Button>
-                        </label>{" "}
-                        <Button
-                            disabled={
-                                !(
-                                    metaData.isValidAddress(
-                                        this.state.saveAddress,
-                                    ) && this.state.saveName.length > 0
-                                )
-                            }
-                            size="small"
-                            variant="contained"
-                            onClick={this.onSubmit}
-                            className={" button"}
-                        >
-                            Save To Ethereum
-                        </Button>
-                        <Button variant="outlined" disabled size="small">
-                            {this.state.price} Ξ
-                        </Button>
-                    </div>
-                </form>
                 <br />
-                <br />
-                <br />
-                <h1>Metadata Viewer</h1>
-                <TextField
-                    label="Address"
-                    fullWidth
-                    required
-                    error={
-                        this.state.address !== "" &&
-                        !metaData.isValidAddress(this.state.address) &&
-                        this.state.address.length > 0
-                    }
-                    value={this.state.address}
-                    onChange={this.onInputChange}
-                    className="top-padding monofont"
-                />
-                <img
-                    src={this.state.logo}
-                    style={{
-                        width: 64,
-                        height: 64,
-                        position: "relative",
-                        left: 0,
-                        marginTop: 15,
-                    }}
-                    alt="Uploaded logo"
-                />
-                <div className="button-aligner">
-                    <Button
-                        disabled={!metaData.isValidAddress(this.state.address)}
-                        size="small"
-                        variant="contained"
-                        onClick={this.onEditAddress}
-                        className={"button"}
-                    >
-                        Edit
-                    </Button>
-                    <Button
-                        disabled={!metaData.isValidAddress(this.state.address)}
-                        size="small"
-                        variant="contained"
-                        onClick={this.onViewAddress}
-                        className={"button"}
-                    >
-                        View
-                    </Button>{" "}
-                    <Button
-                        disabled={!metaData.isValidAddress(this.state.address)}
-                        size="small"
-                        variant="contained"
-                        onClick={this.ethtective}
-                    >
-                        View on Ethtective
-                    </Button>
-                </div>
-                <br />
-                <br />
-                <JSONPretty json={JSON.stringify(this.state.metadata.data)} />
-                <br />
-                <br />
-                <h1>Further Reading</h1>
+                <h1>ΞTHTECTIVE</h1>
                 <p>
                     <span role="img" aria-label="ethtective">
-                        🕵️
+                        ☕
                     </span>{" "}
-                    Mainnet Metadata Prototype Contract:
-                    <a
-                        href={
-                            "http://canary.ethtective.com/" +
-                            metaData.contractAddress
-                        }
-                        target="_blank"
-                    >
-                        <code>{metaData.contractAddress}</code>
+                    Ξthtective is an alternative Ethereum explorer focused on
+                    showing relationships and transactions between addresses.
+                    Use it to sniff out the flow of Ether and Tokens. See how
+                    scams are actually leading back to the same
+                    {"  "}
+                    <span role="img" aria-label="ethtective">
+                        🐋
+                    </span>
+                    (yeah it's a whale). Observe the historical activity of
+                    famous addresses such as the Dao. Find the bastard that
+                    hacked your wallet; and if he participated in an ICO with
+                    KYC call law enforcement.
+                </p>
+                <p>
+                    {" "}
+                    <span role="img" aria-label="ethtective">
+                        🕵️
+                    </span>
+                    It is no longer a fantasy. We make it all possible.
+                    Everything is connected.
+                </p>
+                <LuckyList />
+
+                <h1>Contributing</h1>
+                <p>
+                    <span role="img" aria-label="ethtective">
+                        🎁
+                    </span>{" "}
+                    We're a privately funded operation and hope to offer a more
+                    user friendly experience than regular block explorers.
+                    Donations are welcome to help the (literally) starving
+                    developers of this tool, luckily our users are{" "}
+                    <a href="https://www.ethtective.com/0xfa129dce2215e3f16aa9b1bd31601873206157c5&">
+                        famously generous
                     </a>
                 </p>
                 <p>
-                    <span role="img" aria-label="info">
-                        ℹ️
+                    <span role="img" aria-label="ethtective">
+                        🤖
                     </span>{" "}
-                    The metadata stored into this contract is freely available
-                    by calling <code>.getByAddress(address)</code> on the
-                    contract. This function returns a tuple{" "}
-                    <code>(address, name, ipfs)</code>. If Metadata has been
-                    registered, JSON can be retrieved by looking up the IPFS
-                    address.
+                    Are you a robot?{" "}
+                    <a href="https://www.github.com/ethtective">
+                        Help us with this code thing
+                    </a>
+                    , we're open sourcing the hell out of this.
                 </p>
             </div>
         );
