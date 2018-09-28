@@ -1,6 +1,6 @@
 {
   "name": "cafe.ethtective",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Donation platform for Ethtective.com",
   "dependencies": {
     "@material-ui/core": "^3.0.1",
@@ -35,7 +35,12 @@
     "deploy": "npx release-it"
   },
   "author": "Alexander Mangel",
-  "keywords": ["Ethereum", "Blockchain", "Transaction", "Visualizer"],
+  "keywords": [
+    "Ethereum",
+    "Blockchain",
+    "Transaction",
+    "Visualizer"
+  ],
   "license": "GNU LGPLv3",
   "bugs": {
     "url": "https://github.com/ethtective/cafe/issues"
