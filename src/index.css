@@ -5,6 +5,10 @@ body {
     background: #fafafa;
 }
 
+h1 span {
+    color: #00ffd9 !important;
+}
+
 .json-pretty {
     line-height: 1.75;
     color: #66d9ef;

@@ -31,15 +31,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "deploy2": "npm run build && now ./build -e NODE_ENV='production' --dotenv -n cafe.ethtective && now alias",
     "deploy": "npx release-it"
   },
   "author": "Alexander Mangel",
-  "keywords": [
-    "Ethereum",
-    "Blockchain",
-    "Transaction",
-    "Visualizer"
-  ],
+  "keywords": ["Ethereum", "Blockchain", "Transaction", "Visualizer"],
   "license": "GNU LGPLv3",
   "bugs": {
     "url": "https://github.com/ethtective/cafe/issues"

@@ -34,7 +34,7 @@ export default class Index extends React.Component {
                 <br />
                 <h1>
                     ΞTH
-                    <span style={{ color: "#00ffd9 !important" }}>TECTIVE</span>
+                    <span className="logoblue">TECTIVE</span>
                 </h1>
                 <p>
                     <span role="img" aria-label="ethtective">
