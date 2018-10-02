@@ -1,5 +1,6 @@
 import React from "react";
 import LuckyList from "./luckylist";
+import LoginDropdown from "./loginDropdown";
 
 export default class Index extends React.Component {
     constructor(props) {
@@ -61,6 +62,8 @@ export default class Index extends React.Component {
                     It is no longer a fantasy. We make it all possible.
                     Everything is connected.
                 </p>
+                <LoginDropdown />
+
                 <LuckyList />
 
                 <h1>Contributing</h1>

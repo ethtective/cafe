@@ -59,7 +59,7 @@ export default class LuckyList extends React.Component {
                     <TextField
                         fullWidth
                         error={
-                            this.state.saveLuckyAddress &&
+                            !!this.state.saveLuckyAddress &&
                             this.state.saveLuckyAddress !== "" &&
                             this.state.saveLuckyAddress.length > 0 &&
                             !luckyList.isValidAddress(

@@ -3,13 +3,13 @@
   "version": "1.0.4",
   "description": "Donation platform for Ethtective.com",
   "dependencies": {
-    "@material-ui/core": "^3.0.1",
+    "@material-ui/core": "^3.1.2",
     "@material-ui/icons": "^3.0.1",
     "ethjs": "^0.4.0",
     "express": "^4.14.0",
     "ipfs-mini": "^1.1.2",
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
     "react-ga": "^2.5.3",
     "react-json-pretty": "^1.7.9",
     "react-magic-dropzone": "^1.0.1",
@@ -21,7 +21,7 @@
     "typography-theme-github": "^0.15.10"
   },
   "devDependencies": {
-    "prettier": "^1.14.2",
+    "prettier": "^1.14.3",
     "release-it": "^7.4.7"
   },
   "engines": {
