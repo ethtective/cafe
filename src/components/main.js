@@ -6,14 +6,14 @@ export default class Index extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            address: this.props.address,
+            address: this.props.address
         };
     }
 
     ethtective = () => {
         window.open(
             "https://canary.ethtective.com/" + this.state.address,
-            "_blank",
+            "_blank"
         );
     };
 
@@ -29,7 +29,7 @@ export default class Index extends React.Component {
                     paddingTop: "1.5rem",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
-                    saveAddress: "",
+                    saveAddress: ""
                 }}
             >
                 <br />
@@ -62,8 +62,6 @@ export default class Index extends React.Component {
                     It is no longer a fantasy. We make it all possible.
                     Everything is connected.
                 </p>
-                <LoginDropdown />
-
                 <LuckyList />
 
                 <h1>Contributing</h1>
