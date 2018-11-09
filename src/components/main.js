@@ -1,6 +1,5 @@
 import React from "react";
 import LuckyList from "./luckylist";
-import LoginDropdown from "./loginDropdown";
 
 export default class Index extends React.Component {
     constructor(props) {
