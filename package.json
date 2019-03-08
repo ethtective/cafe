@@ -18,7 +18,7 @@
     "react-syntax-highlighter": "^9.0.0",
     "react-typography": "^0.16.13",
     "typography": "^0.16.17",
-    "typography-theme-github": "^0.15.10"
+    "typography-theme-github": "^0.16.19"
   },
   "devDependencies": {
     "prettier": "^1.14.3",
