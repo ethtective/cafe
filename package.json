@@ -13,7 +13,7 @@
     "react-ga": "^2.5.3",
     "react-json-pretty": "^1.7.9",
     "react-magic-dropzone": "^1.0.1",
-    "react-router-dom": "^4.3.1",
+    "react-router-dom": "^5.1.0",
     "react-scripts": "2.0.3",
     "react-syntax-highlighter": "^9.0.0",
     "react-typography": "^0.16.13",
