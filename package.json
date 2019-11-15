@@ -9,7 +9,7 @@
     "express": "^4.14.0",
     "ipfs-mini": "^1.1.2",
     "react": "^16.12.0",
-    "react-dom": "^16.5.2",
+    "react-dom": "^16.12.0",
     "react-ga": "^2.5.3",
     "react-json-pretty": "^1.7.9",
     "react-magic-dropzone": "^1.0.1",
