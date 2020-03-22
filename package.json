@@ -21,7 +21,7 @@
     "typography-theme-github": "^0.15.10"
   },
   "devDependencies": {
-    "prettier": "^1.14.3",
+    "prettier": "^2.0.1",
     "release-it": "^7.4.7"
   },
   "engines": {
