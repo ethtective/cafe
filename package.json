@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "prettier": "^1.14.3",
-    "release-it": "^7.4.7"
+    "release-it": "^13.5.4"
   },
   "engines": {
     "node": "10.1.0"
